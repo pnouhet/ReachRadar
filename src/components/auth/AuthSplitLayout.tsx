@@ -53,11 +53,12 @@ export function AuthSplitLayout({ panel, back, switchTo, children }: AuthSplitLa
         <div className="w-full max-w-[520px]">{children}</div>
 
         <p className="text-body-sm text-muted">
-          <Link href="/legal/terms" className="hover:text-soft-white">
+          {/* prefetch off until the legal pages exist (plan 2): a prefetched 404 logs console errors. */}
+          <Link href="/legal/terms" prefetch={false} className="hover:text-soft-white">
             Terms of use
           </Link>
           {" · "}
-          <Link href="/legal/privacy" className="hover:text-soft-white">
+          <Link href="/legal/privacy" prefetch={false} className="hover:text-soft-white">
             Privacy policy
           </Link>
         </p>

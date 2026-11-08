@@ -98,9 +98,9 @@ test("a wrong password keeps the email that was typed", async ({ page }) => {
   await expect(page.getByLabel("Email")).toHaveValue(artist.email);
 });
 
-test("a crafted next link cannot send a fresh login to another site", async ({ page }) => {
+test("a crafted next link cannot send a fresh login to another site", async ({ page, baseURL }) => {
   await logIn(page, artist, "/login?next=%2F%09%2Fexample.com");
-  await expect(page).toHaveURL(/^http:\/\/localhost:3000\/dashboard$/);
+  await expect(page).toHaveURL(new URL("/dashboard", baseURL).href);
 });
 
 test("a sign-up refused by the server keeps everything that was typed", async ({ page }) => {
