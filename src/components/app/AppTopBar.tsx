@@ -10,7 +10,7 @@ import type { Role } from "@/lib/nav";
 import { artistMock, curatorMock } from "@/mocks";
 
 type AppTopBarProps = {
-  user: { displayName: string; role: Role; avatarUrl: string | null };
+  user: { displayName: string; role: Role; avatarUrl: string | null; isAdmin: boolean };
   menuOpen: boolean;
   onToggleMenu: () => void;
 };
@@ -77,7 +77,7 @@ export function AppTopBar({ user, menuOpen, onToggleMenu }: AppTopBarProps) {
           <Avatar src={user.avatarUrl} name={user.displayName} size={40} />
           <span className="hidden max-w-48 flex-col xl:flex">
             <span className="truncate text-body-md text-white">{user.displayName}</span>
-            <span className="text-body-sm text-muted">{ROLE_LABEL[user.role]}</span>
+            <span className="text-body-sm text-muted">{user.isAdmin ? "Admin" : ROLE_LABEL[user.role]}</span>
           </span>
           <ChevronDown size={16} strokeWidth={1.5} className="hidden text-slate group-open:rotate-180 xl:block" aria-hidden />
         </summary>

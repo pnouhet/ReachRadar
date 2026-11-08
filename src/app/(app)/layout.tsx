@@ -4,7 +4,7 @@ import { getCurrentProfile } from "@/lib/profile/queries";
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const profile = await getCurrentProfile();
   return (
-    <AppShell user={{ displayName: profile.displayName, role: profile.role, avatarUrl: profile.avatarUrl }}>
+    <AppShell user={{ displayName: profile.displayName, role: profile.role, avatarUrl: profile.avatarUrl, isAdmin: profile.isAdmin }}>
       {children}
     </AppShell>
   );

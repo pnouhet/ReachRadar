@@ -45,7 +45,7 @@ export default async function SettingsAccountPage() {
       <SettingsGroup title="Account type">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="flex flex-col">
-            <span className="text-label-strong">{isArtist ? "Artist" : "Curator"}</span>
+            <span className="text-label-strong">{profile.isAdmin ? "Admin" : isArtist ? "Artist" : "Curator"}</span>
             <span className="text-body-sm text-muted">
               {isArtist
                 ? "You also run a playlist, a label, a radio or a blog? Add a Pro profile."

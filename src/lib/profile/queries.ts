@@ -1,7 +1,9 @@
 import "server-only";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import type { Role } from "@/lib/nav";
+import { VIEW_COOKIE, viewRoleFor } from "@/lib/auth/view";
+import type { AccountRole, Role } from "@/lib/nav";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { supabaseUrl } from "@/lib/supabase/env";
 
@@ -10,7 +12,10 @@ export type ProfileLinks = Partial<Record<"spotify" | "soundcloud" | "instagram"
 export type Profile = {
   id: string;
   email: string;
+  /** The role pages render for: the account's role, or an admin's current view. */
   role: Role;
+  accountRole: AccountRole;
+  isAdmin: boolean;
   displayName: string;
   slug: string;
   bio: string | null;
@@ -42,7 +47,9 @@ export const getCurrentProfile = cache(async (): Promise<Profile> => {
   return {
     id: row.id,
     email: auth.user.email ?? "",
-    role: row.role === "admin" ? "artist" : row.role, // replaced by the view role in the admin strip task
+    role: viewRoleFor(row.role, (await cookies()).get(VIEW_COOKIE)?.value),
+    accountRole: row.role,
+    isAdmin: row.role === "admin",
     displayName: row.display_name,
     slug: row.slug,
     bio: row.bio,
