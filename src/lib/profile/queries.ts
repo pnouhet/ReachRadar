@@ -22,6 +22,7 @@ export type Profile = {
   bannerPath: string | null;
   avatarUrl: string | null;
   bannerUrl: string | null;
+  createdAt: string;
 };
 
 export function publicStorageUrl(bucket: string, path: string | null): string | null {
@@ -53,5 +54,6 @@ export const getCurrentProfile = cache(async (): Promise<Profile> => {
     bannerPath: row.banner_path,
     avatarUrl: publicStorageUrl("avatars", row.avatar_path),
     bannerUrl: publicStorageUrl("banners", row.banner_path),
+    createdAt: row.created_at,
   };
 });
