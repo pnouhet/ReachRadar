@@ -2,13 +2,13 @@ import {
   CircleHelp,
   Coins,
   Headphones,
+  House,
   Inbox,
-  LayoutDashboard,
   ListMusic,
   MessageCircle,
   Search,
   Send,
-  Settings,
+  SlidersHorizontal,
   User,
   Wallet,
   type LucideIcon,
@@ -22,7 +22,7 @@ const BOTH: Role[] = ["artist", "curator"];
 
 /** Sidebar entries, in display order. Single source of truth for role access to app pages. */
 export const NAV_ITEMS: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: BOTH },
+  { href: "/dashboard", label: "Dashboard", icon: House, roles: BOTH },
   { href: "/pitch", label: "Pitch to curators", icon: Send, roles: ["artist"] },
   { href: "/rate", label: "Rate & earn", icon: Headphones, roles: ["artist"] },
   { href: "/inbox", label: "Inbox", icon: Inbox, roles: ["curator"] },
@@ -32,7 +32,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/profile", label: "My profile", icon: User, roles: BOTH },
   { href: "/credits", label: "Credits & pricing", icon: Coins, roles: ["artist"] },
   { href: "/earnings", label: "Earnings", icon: Wallet, roles: ["curator"] },
-  { href: "/settings", label: "Settings", icon: Settings, roles: BOTH },
+  { href: "/settings", label: "Settings", icon: SlidersHorizontal, roles: BOTH },
   { href: "/help", label: "Help & FAQ", icon: CircleHelp, roles: BOTH },
 ];
 

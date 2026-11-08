@@ -33,9 +33,9 @@ export function Avatar({ src, name, size, className }: AvatarProps) {
     <span
       role="img"
       aria-label={name}
-      style={{ ...style, fontSize: Math.max(12, Math.round(size * 0.36)) }}
+      style={{ ...style, fontSize: Math.max(13, Math.round(size * 0.33)) }}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-full bg-linear-135 from-cyan to-slate font-display font-bold text-white",
+        "inline-flex shrink-0 items-center justify-center rounded-full bg-linear-to-r from-cyan to-midnight font-body font-semibold tracking-[0.06em] text-white",
         className,
       )}
     >
