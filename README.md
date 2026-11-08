@@ -3,7 +3,7 @@
 Pitch smarter. Pay only for real feedback. Grow real fans.
 
 Next.js (App Router, TypeScript, Tailwind CSS v4) + Supabase (Auth, Postgres, Storage), deployed on Vercel.
-The design source is the Figma file `ReachRadar` (page **Screens**); product rules live in `DESIGN.md` and `DEV-NOTES.md`.
+The design source is the Figma file `ReachRadar` (page **Screens**); product rules live in `DESIGN.md`.
 The original static home prototype is kept in `prototype/` for reference.
 
 ## What works today (plan 1)
