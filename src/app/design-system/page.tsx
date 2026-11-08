@@ -1,4 +1,8 @@
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { AdminStrip } from "@/components/app/AdminStrip";
+import { isAdminRequest } from "@/lib/auth/is-admin";
+import { VIEW_COOKIE, viewRoleFor } from "@/lib/auth/view";
 import { Plus, User } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
@@ -16,8 +20,18 @@ import { DemoControls } from "./DemoControls";
 export const metadata = { title: "Design system" };
 
 const COLORS = [
-  "midnight", "surface-1", "surface-2", "surface-3", "border-subtle", "border-strong",
-  "rose", "cyan", "slate", "soft-white", "success", "warning",
+  "midnight",
+  "surface-1",
+  "surface-2",
+  "surface-3",
+  "border-subtle",
+  "border-strong",
+  "rose",
+  "cyan",
+  "slate",
+  "soft-white",
+  "success",
+  "warning",
 ] as const;
 
 const TEXT_STYLES = [
@@ -38,76 +52,123 @@ const TEXT_STYLES = [
   ["text-tab", "Tab default"],
 ] as const;
 
-export default function DesignSystemPage() {
-  if (process.env.NODE_ENV === "production") notFound();
+export default async function DesignSystemPage() {
+  const isAdmin = await isAdminRequest();
+  // Hidden in production except for admins; open to everyone in development.
+  if (process.env.NODE_ENV === "production" && !isAdmin) notFound();
+  const view = viewRoleFor("admin", (await cookies()).get(VIEW_COOKIE)?.value);
 
   return (
-    <main className="mx-auto flex max-w-content flex-col gap-16 px-6 py-16">
-      <section className="flex flex-col gap-6">
-        <h1 className="text-page-title text-gradient">Design system</h1>
-        <Wordmark width={400} />
-        <p className="text-display-hero text-outline">ReachRadar</p>
-      </section>
+    <>
+      {isAdmin && <AdminStrip view={view} pathname="/design-system" />}
+      <main className="mx-auto flex max-w-content flex-col gap-16 px-6 py-16">
+        <section className="flex flex-col gap-6">
+          <h1 className="text-page-title text-gradient">Design system</h1>
+          <Wordmark width={400} />
+          <p className="text-display-hero text-outline">ReachRadar</p>
+        </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-heading-card">Colors</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
-          {COLORS.map((c) => (
-            <div key={c} className="flex flex-col gap-2">
-              <div className="h-16 border border-border-subtle" style={{ background: `var(--color-${c})` }} />
-              <span className="text-body-sm text-muted">{c}</span>
+        <section className="flex flex-col gap-4">
+          <h2 className="text-heading-card">Colors</h2>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+            {COLORS.map((c) => (
+              <div key={c} className="flex flex-col gap-2">
+                <div
+                  className="h-16 border border-border-subtle"
+                  style={{ background: `var(--color-${c})` }}
+                />
+                <span className="text-body-sm text-muted">{c}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
+          <h2 className="text-heading-card">Typography</h2>
+          {TEXT_STYLES.map(([cls, sample]) => (
+            <div
+              key={cls}
+              className="flex flex-col gap-1 border-b border-border-subtle pb-4"
+            >
+              <span className="text-body-sm text-muted">{cls}</span>
+              <span className={cls}>{sample}</span>
             </div>
           ))}
-        </div>
-      </section>
+        </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="text-heading-card">Typography</h2>
-        {TEXT_STYLES.map(([cls, sample]) => (
-          <div key={cls} className="flex flex-col gap-1 border-b border-border-subtle pb-4">
-            <span className="text-body-sm text-muted">{cls}</span>
-            <span className={cls}>{sample}</span>
+        <section id="components" className="flex flex-col gap-10">
+          <h2 className="text-heading-card">Components</h2>
+          <div className="flex flex-wrap items-center gap-6">
+            <Button variant="primary">Get started</Button>
+            <Button variant="primary" icon={User}>
+              Get started
+            </Button>
+            <Button variant="secondary">Get started</Button>
+            <Button variant="ghost">Get started</Button>
+            <Button variant="secondary" icon={Plus}>
+              Get started
+            </Button>
+            <Button variant="secondary">
+              A much longer secondary label stays at -12°
+            </Button>
+            <Button variant="primary" loading>
+              Saving
+            </Button>
           </div>
-        ))}
-      </section>
-
-      <section id="components" className="flex flex-col gap-10">
-        <h2 className="text-heading-card">Components</h2>
-        <div className="flex flex-wrap items-center gap-6">
-          <Button variant="primary">Get started</Button>
-          <Button variant="primary" icon={User}>Get started</Button>
-          <Button variant="secondary">Get started</Button>
-          <Button variant="ghost">Get started</Button>
-          <Button variant="secondary" icon={Plus}>Get started</Button>
-          <Button variant="secondary">A much longer secondary label stays at -12°</Button>
-          <Button variant="primary" loading>Saving</Button>
-        </div>
-        <div className="flex flex-wrap items-center gap-6">
-          <Chip>Hip-hop</Chip>
-          <Chip active>Hip-hop</Chip>
-          <CreditPill credits={24} />
-          <SectionBadge>01</SectionBadge>
-          <Stat value="+800" label="Submitted songs" />
-          <Avatar name="Ilan Mercier" size={44} />
-          <Avatar name="Ilan Mercier" size={80} />
-        </div>
-        <DemoControls />
-        <div className="flex gap-2 border-b border-border-subtle">
-          <Tab active>Tab label</Tab>
-          <Tab active={false}>Tab label</Tab>
-          <Tab active={false} count={8}>Inbox</Tab>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          <Input label="Email" placeholder="you@artist.com" helper="We'll never share it" />
-          <Input label="Password" type="password" defaultValue="secret123" trailing={<button type="button" className="text-label-strong text-cyan">Show</button>} />
-          <Input label="Email" defaultValue="you@artist.com" error="We'll never share it" />
-        </div>
-        <Textarea label="Bio" maxLength={300} showCount defaultValue="Producer & DJ from Lyon." />
-        <div className="flex flex-col gap-3">
-          <Checkbox label="I accept the Terms of use and Privacy policy" />
-          <Checkbox label="I accept the Terms of use and Privacy policy" defaultChecked />
-        </div>
-      </section>
-    </main>
+          <div className="flex flex-wrap items-center gap-6">
+            <Chip>Hip-hop</Chip>
+            <Chip active>Hip-hop</Chip>
+            <CreditPill credits={24} />
+            <SectionBadge>01</SectionBadge>
+            <Stat value="+800" label="Submitted songs" />
+            <Avatar name="Ilan Mercier" size={44} />
+            <Avatar name="Ilan Mercier" size={80} />
+          </div>
+          <DemoControls />
+          <div className="flex gap-2 border-b border-border-subtle">
+            <Tab active>Tab label</Tab>
+            <Tab active={false}>Tab label</Tab>
+            <Tab active={false} count={8}>
+              Inbox
+            </Tab>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            <Input
+              label="Email"
+              placeholder="you@artist.com"
+              helper="We'll never share it"
+            />
+            <Input
+              label="Password"
+              type="password"
+              defaultValue="secret123"
+              trailing={
+                <button type="button" className="text-label-strong text-cyan">
+                  Show
+                </button>
+              }
+            />
+            <Input
+              label="Email"
+              defaultValue="you@artist.com"
+              error="We'll never share it"
+            />
+          </div>
+          <Textarea
+            label="Bio"
+            maxLength={300}
+            showCount
+            defaultValue="Producer & DJ from Lyon."
+          />
+          <div className="flex flex-col gap-3">
+            <Checkbox label="I accept the Terms of use and Privacy policy" />
+            <Checkbox
+              label="I accept the Terms of use and Privacy policy"
+              defaultChecked
+            />
+          </div>
+        </section>
+      </main>
+    </>
   );
 }

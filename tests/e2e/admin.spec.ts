@@ -88,3 +88,11 @@ test("a regular artist sees no admin strip, even with a view cookie", async ({ p
   await expect(strip(page)).toHaveCount(0);
   await expect(nav(page).getByRole("link", { name: /Inbox/ })).toHaveCount(0);
 });
+
+test("the design system shows the admin strip to admins", async ({ page }) => {
+  await logIn(page, admin);
+  await strip(page).getByRole("link", { name: "Design system" }).click();
+  await expect(page).toHaveURL(/\/design-system$/);
+  await expect(page.getByRole("heading", { level: 1, name: "Design system" })).toBeVisible();
+  await expect(strip(page)).toBeVisible();
+});
