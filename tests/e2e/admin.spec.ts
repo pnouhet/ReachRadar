@@ -73,7 +73,9 @@ test("an admin can open the upload page", async ({ page }) => {
   await expect(strip(page)).toContainText("Viewing as artist");
 });
 
-test("the strip does not overflow on a phone", async ({ page }) => {
+test("the strip does not overflow on a phone", async ({ page, context, baseURL }) => {
+  // The cookie banner (plan 2) would cover the login button on a phone.
+  await context.addCookies([{ name: "rr_consent", value: "v1.0.0", url: baseURL! }]);
   await page.setViewportSize({ width: 375, height: 812 });
   await logIn(page, admin);
   await expect(strip(page)).toBeVisible();
