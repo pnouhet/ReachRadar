@@ -10,3 +10,8 @@ export function viewRoleFor(account: AccountRole, cookie: string | undefined): R
   if (account !== "admin") return account;
   return cookie === "curator" ? "curator" : "artist";
 }
+
+/** Router prefetches must not switch an admin's view: the link may never be clicked. */
+export function isPrefetchRequest(headers: Headers): boolean {
+  return headers.has("next-router-prefetch");
+}

@@ -49,7 +49,7 @@ isOneToOne: false
 { Args: { "p_email": string }; Returns: undefined
                            },
 "is_admin":
-{ Args: { "p_uid"?: string }; Returns: boolean
+{ Args: Record<PropertyKey, never>; Returns: boolean
                            },
 "revoke_admin":
 { Args: { "p_email": string }; Returns: undefined

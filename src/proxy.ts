@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { resolveRouteAccess } from "@/lib/auth/guard";
-import { VIEW_COOKIE, VIEW_COOKIE_OPTIONS, viewRoleFor } from "@/lib/auth/view";
+import { VIEW_COOKIE, VIEW_COOKIE_OPTIONS, isPrefetchRequest, viewRoleFor } from "@/lib/auth/view";
 import type { AccountRole } from "@/lib/nav";
 
 const ACCOUNT_ROLES: AccountRole[] = ["artist", "curator", "admin"];
@@ -38,7 +38,7 @@ export async function proxy(request: NextRequest) {
     return redirect;
   }
 
-  if (access.setView) {
+  if (access.setView && !isPrefetchRequest(request.headers)) {
     // Let this very render see the new view, keep the Supabase cookies already set, and remember the view.
     request.cookies.set(VIEW_COOKIE, access.setView);
     const switched = NextResponse.next({ request });

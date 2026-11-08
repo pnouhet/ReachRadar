@@ -137,4 +137,26 @@ describe("what admins see and what they can do", () => {
     const db = await signedInClient(u.email, u.password);
     expect((await db.from("tracks").insert({ owner_id: u.id }).select("id").single()).error).toBeNull();
   });
+
+  it("a regular user cannot ask whether another account is an admin", async () => {
+    const admin = await make("artist", "Probed Admin");
+    const regular = await make("artist", "Prober");
+    await grantAdmin(admin.email);
+    const db = await signedInClient(regular.email, regular.password);
+    const probe = await db.rpc("is_admin", { p_uid: admin.id });
+    expect(probe.data).not.toBe(true);
+    expect(probe.error).not.toBeNull();
+    // The argument-free form only answers for the caller.
+    expect((await db.rpc("is_admin")).data).toBe(false);
+  });
+
+  it("anon cannot call grant_admin", async () => {
+    const u = await make("artist", "Anon Target");
+    const { createClient } = await import("@supabase/supabase-js");
+    const anon = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
+      auth: { persistSession: false },
+    });
+    expect((await anon.rpc("grant_admin", { p_email: u.email })).error).not.toBeNull();
+    expect((await profileOf(u.id)).role).toBe("artist");
+  });
 });

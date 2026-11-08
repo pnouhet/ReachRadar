@@ -96,3 +96,16 @@ test("the design system shows the admin strip to admins", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Design system" })).toBeVisible();
   await expect(strip(page)).toBeVisible();
 });
+
+test("going back to a page of the other side brings its sidebar back", async ({ page }) => {
+  await logIn(page, admin);
+  await page.goto("/inbox");
+  await expect(strip(page)).toContainText("Viewing as curator");
+  await strip(page).getByRole("button", { name: "Switch to artist" }).click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+  await expect(strip(page)).toContainText("Viewing as artist");
+  await page.goBack();
+  await expect(page).toHaveURL(/\/inbox$/);
+  await expect(strip(page)).toContainText("Viewing as curator");
+  await expect(nav(page).getByRole("link", { name: /Inbox/ })).toHaveAttribute("aria-current", "page");
+});

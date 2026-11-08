@@ -16,3 +16,12 @@ describe("viewRoleFor", () => {
     expect(viewRoleFor("admin", cookie)).toBe("artist");
   });
 });
+
+describe("isPrefetchRequest", () => {
+  it("recognises Next.js router prefetches", async () => {
+    const { isPrefetchRequest } = await import("@/lib/auth/view");
+    expect(isPrefetchRequest(new Headers({ "next-router-prefetch": "1" }))).toBe(true);
+    expect(isPrefetchRequest(new Headers({ rsc: "1" }))).toBe(false);
+    expect(isPrefetchRequest(new Headers())).toBe(false);
+  });
+});

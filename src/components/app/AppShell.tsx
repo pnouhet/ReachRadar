@@ -1,7 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { pageAllowedFor } from "@/lib/auth/guard";
 import { cn } from "@/lib/cn";
 import { AdminStrip } from "./AdminStrip";
 import type { Role } from "@/lib/nav";
@@ -19,7 +20,14 @@ type AppShellProps = {
  */
 export function AppShell({ user, children }: AppShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  // Layouts don't re-render on client navigation. When an admin lands on a page of the other side
+  // (Back button, in-page link), the proxy has already switched the view: refresh so the shell follows.
+  useEffect(() => {
+    if (user.isAdmin && !pageAllowedFor(pathname, user.role)) router.refresh();
+  }, [pathname, user.isAdmin, user.role, router]);
 
   useEffect(() => {
     if (!open) return;
