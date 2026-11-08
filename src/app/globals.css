@@ -1,1 +1,196 @@
 @import "tailwindcss";
+
+/* ReachRadar tokens — source: Figma variables "RR Color" / "RR Space" and text styles. */
+@theme static {
+  --color-midnight: #0d1b2a;
+  --color-surface-1: #122338;
+  --color-surface-2: #182d45;
+  --color-surface-3: #1f3854;
+  --color-border-subtle: #778da933;
+  --color-border-strong: #778da966;
+  --color-rose: #e54166;
+  --color-cyan: #059bc0;
+  --color-slate: #778da9;
+  --color-soft-white: #eeeeee;
+  --color-muted: #778da9;
+  --color-success: #aceb98;
+  --color-warning: #ffc145;
+
+  --font-display: var(--font-syne), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+
+  --spacing-sidebar: 264px;
+  --spacing-topbar: 80px;
+  --container-content: 1320px;
+
+  --radius-xs: 2px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
+
+/* ---------- Text styles (Figma) ---------- */
+@utility text-display-hero {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 90px;
+  line-height: 68px;
+  text-transform: uppercase;
+}
+@utility text-display-section {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 64px;
+  text-transform: uppercase;
+}
+@utility text-heading-secondary {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 52px;
+  text-transform: uppercase;
+}
+@utility text-page-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 44px;
+  text-transform: uppercase;
+}
+@utility text-heading-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 32px;
+}
+@utility text-heading-card {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+@utility text-metric-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 44px;
+}
+@utility text-body-lg {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+@utility text-body-md {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+@utility text-body-sm {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+@utility text-body-long {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+}
+@utility text-label {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.04em;
+}
+@utility text-label-strong {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@utility text-button {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.03em;
+}
+@utility text-tab {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* Gradient headline — only one per screen. */
+@utility text-gradient {
+  background: linear-gradient(90deg, #059bc0 0%, #ffffff 50%, #778da9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Outline text without inner contour lines: SVG filter #text-outline (see OutlineFilter). */
+@utility text-outline {
+  color: #ffffff;
+  filter: url(#text-outline);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-midnight);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100dvh;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------- Slanted parallelogram (single pseudo-element, constant -12deg) ----------
+   Set --slant-h (element height), --slant-bg and --slant-border on the element. */
+@layer components {
+  .slant {
+    --slant-h: 48px;
+    --slant-bg: transparent;
+    --slant-border: transparent;
+    --slant-border-width: 1.5px;
+    position: relative;
+    isolation: isolate;
+  }
+  .slant::before {
+    content: "";
+    position: absolute;
+    inset: 0 calc(var(--slant-h) * 0.1063);
+    z-index: -1;
+    background: var(--slant-bg);
+    border: var(--slant-border-width) solid var(--slant-border);
+    border-radius: 2px;
+    transform: skewX(-12deg);
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+}
