@@ -309,7 +309,7 @@ File: `ReachRadar` (figma.com/design/2HhgAcEIsgZm7tOcaergLH). Pages: **Reference
     - **Header:** gradient "DISCOVER", a subtitle with counts and "Saved searches (2)".
     - **Search:** a 64px search input with cyan border, search icon and clear, then "Try:" suggestion links.
     - **Category tabs:** All · 1,248 / Artists / Playlists / Labels / Radios / Blogs, each with a count.
-    - **Filter sidebar (300px card):** "Clear all (5)"; genre checkboxes with counts and "+36 more"; a location dropdown; an audience range slider (10k – 500k); and **square switches** (cyan on / slate off, radius 2, no pill) for Verified only, Open to submissions and Open to collabs.
+    - **Filter sidebar (300px card):** "Clear all (5)"; genre checkboxes with counts and "+36 more"; a location dropdown; an audience range slider (10k – 500k); and **square switches** (on = cyan fill + dark knob right, off = surface-3 fill + light knob left, radius 2, no pill) for Verified only, Open to submissions and Open to collabs.
     - **Results bar:** "214 results for …", Sort (Relevance), a grid/list toggle, removable active-filter chips and "Save this search".
     - **Result grid:** 3 × 393px **Result Card** instances, then "Showing 9 of 214" and "Load more results".
   - **Result Card** component (Design System): 104px banner photo fading to surface-1, a 72px gradient avatar overlapping it, type and Verified, name, meta, genres, and a status line with a cyan dot (slate when closed). Actions are a message icon button, "+ Follow" (or "✓ Following"), and a Secondary CTA (Pitch · x cr for pros, Collab for artists, Notify me when closed). There is no rose in the cards, because the grid would get too loud.
@@ -533,7 +533,7 @@ The V2 shell is used, with **Settings** active in the sidebar. Header "Settings"
   - Connected accounts (Google connected, Spotify "Connect" Secondary).
   - Account type "Artist" + "Add a Pro profile".
 - `16c — Settings · Notifications` (x 40420):
-  - A matrix panel of events × Email / In-app / Push with **square switches** (on = cyan fill + dark knob right, off = slate outline + knob left). The events include "Bonus credits expiring".
+  - A matrix panel of events × Email / In-app / Push with **square switches** (on = cyan fill + dark knob right, off = surface-3 fill, strong border + light knob left). The events include "Bonus credits expiring".
   - Quiet hours (From / To).
 - `16d — Settings · Privacy & data` (x 42922):
   - Visibility radio cards (Public selected / Members only).

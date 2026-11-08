@@ -15,6 +15,11 @@ test.afterAll(async () => {
   for (const u of [artist, curator, unconfirmed]) if (u) await deleteTestUser(u.id);
 });
 
+// These tests are about the forms, not the cookie banner that would cover their lower half.
+test.beforeEach(async ({ context }) => {
+  await context.addCookies([{ name: "rr_consent", value: "v1.0.0", url: "http://localhost:3000" }]);
+});
+
 async function logIn(page: Page, user: TestUser, path = "/login") {
   await page.goto(path);
   await page.getByLabel("Email").fill(user.email);

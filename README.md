@@ -73,6 +73,17 @@ npm run test:e2e
 - `test:integration` — database rules (triggers, RLS, storage policies) against the Supabase project; creates and deletes its own test users.
 - `test:e2e` — Playwright (Chromium) against `npm run dev`; uses the same test-user helpers. Set `BASE_URL` to run against a deployment.
 
+## Public pages
+
+Visible to everyone, no login needed:
+
+- `/` — home
+- `/pricing` — credit packs, how to earn credits, FAQ
+- `/legal/<slug>` — `privacy`, `gdpr`, `cookies`, `terms`, `legal-notice`
+
+Page copy for home, pricing and the legal documents lives in `src/content/*` (`home.ts`, `pricing.ts`, `legal/`); shell UI labels (header, footer, cookie banner) live in their components.
+The cookie banner stores the visitor's choice in the `rr_consent` cookie (`v1.<analytics>.<marketing>`, for example `v1.0.0` when everything optional is rejected).
+
 ## Admin accounts
 
 An admin sees every page of the app the way an artist or a curator sees it: a yellow strip above the top bar switches between the two views, and links to the design system (also reachable in production for admins only).
