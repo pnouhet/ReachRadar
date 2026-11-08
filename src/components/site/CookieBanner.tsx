@@ -18,7 +18,10 @@ export function CookieBanner({ initial }: { initial: Consent | null }) {
   if (saved) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-3 pb-3 sm:px-6 sm:pb-6">
+    <div
+      data-print-hide
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-3 pb-3 sm:px-6 sm:pb-6"
+    >
       <section
         role="region"
         aria-label="We use cookies"

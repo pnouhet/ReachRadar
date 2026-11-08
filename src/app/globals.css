@@ -240,3 +240,31 @@
 .anim-pending [data-anim="hero-photo"] {
   transform: scale(1.18);
 }
+
+/* "Download PDF" on the legal pages prints the document only: no site chrome, TOC, tabs or banner. */
+@media print {
+  header,
+  footer,
+  [data-print-hide],
+  [data-legal] aside,
+  [data-legal] nav {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  [data-legal] {
+    --color-white: #000;
+    --color-soft-white: #111;
+    --color-cyan: #04627a;
+    --color-muted: #444;
+    color: #111;
+  }
+  [data-legal] section {
+    break-inside: avoid;
+  }
+  [data-legal] * {
+    background-color: transparent !important;
+  }
+}

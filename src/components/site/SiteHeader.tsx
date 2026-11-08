@@ -42,12 +42,12 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
         className={cn(
           "z-50 transition-[background-color,padding,backdrop-filter] duration-300 motion-reduce:transition-none",
           solid
-            ? "sticky top-0 border-b border-border-subtle bg-midnight py-5"
+            ? "sticky top-0 border-b border-border-subtle bg-midnight py-5 lg:py-[35px]"
             : "fixed inset-x-0 top-0",
           !solid &&
             (scrolled
               ? "bg-midnight/80 py-4 backdrop-blur-md"
-              : "py-5 lg:py-8"),
+              : "py-5 lg:py-[35px]"),
         )}
       >
         <div className="mx-auto grid max-w-[1920px] grid-cols-[auto_1fr_auto] items-center gap-4 px-6 lg:grid-cols-[160px_1fr_160px] lg:px-10 xl:px-[60px]">

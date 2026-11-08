@@ -61,6 +61,12 @@ test("Customize heads to the preferences section of the cookie policy", async ({
     .getByRole("link", { name: "Customize" })
     .click();
   await expect(page).toHaveURL(/\/legal\/cookies#preferences$/);
+  await expect(page.locator("section#preferences")).toBeVisible();
+  await expect(
+    page
+      .locator("section#preferences")
+      .getByRole("switch", { name: "Analytics" }),
+  ).toBeVisible();
 });
 
 test("the banner does not overflow at 375px", async ({ page }) => {
@@ -73,12 +79,12 @@ test("the banner does not overflow at 375px", async ({ page }) => {
   expect(overflow).toBe(false);
 });
 
-// Needs the legal pages from plan 2 task 5.
-test.fixme("saving on the cookie page hides the banner", async ({
+test("saving on the cookie page hides the banner", async ({
   page,
   context,
 }) => {
   await page.goto("/legal/cookies#preferences");
+  await expect(page.getByRole("region", { name: BANNER })).toBeVisible();
   await page.getByRole("switch", { name: "Analytics" }).click();
   await page.getByRole("button", { name: "Save my choices" }).click();
   await expect(page.getByRole("region", { name: BANNER })).toBeHidden();

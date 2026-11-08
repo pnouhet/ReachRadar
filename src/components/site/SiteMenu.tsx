@@ -86,7 +86,6 @@ export function SiteMenu({ open, onClose, signedIn }: SiteMenuProps) {
                 <Link
                   href={`/legal/${d.slug}`}
                   onClick={onClose}
-                  prefetch={false}
                   className="text-body-lg text-soft-white hover:text-white"
                 >
                   {d.label}

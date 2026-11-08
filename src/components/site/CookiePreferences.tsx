@@ -7,7 +7,8 @@ import { Switch } from "@/components/ui/Switch";
 import { writeConsent, type Consent } from "@/lib/consent";
 
 const ROW = "flex items-center gap-6 px-6 py-5";
-const ROW_TITLE = "text-label-strong uppercase text-white";
+const ROW_TITLE =
+  "text-label-strong uppercase text-white [text-box:trim-both_cap_alphabetic]";
 
 /** Preferences panel of the Cookie policy page (Figma 4465:3290, "Your preferences"). */
 export function CookiePreferences({ initial }: { initial: Consent | null }) {
@@ -33,7 +34,9 @@ export function CookiePreferences({ initial }: { initial: Consent | null }) {
               choices. The site can&apos;t work without them.
             </p>
           </div>
-          <p className="text-label-strong uppercase text-success">Always on</p>
+          <p className="text-label-strong uppercase text-success [text-box:trim-both_cap_alphabetic]">
+            Always on
+          </p>
         </div>
         <div className={`${ROW} border-t border-border-subtle`}>
           <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -90,7 +93,7 @@ export function CookiePreferences({ initial }: { initial: Consent | null }) {
       >
         <Check
           size={14}
-          strokeWidth={1.5}
+          strokeWidth={2}
           className={saved ? "text-success" : "invisible"}
           aria-hidden
         />

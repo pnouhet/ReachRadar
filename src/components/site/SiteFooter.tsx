@@ -32,7 +32,6 @@ export function SiteFooter() {
                     <Link
                       key={l.label}
                       href={l.href}
-                      prefetch={l.href.startsWith("/legal") ? false : undefined}
                       className="text-body-md text-muted transition-colors hover:text-white"
                     >
                       {l.label}
