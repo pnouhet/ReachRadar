@@ -64,3 +64,15 @@ export const TINY_PNG = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==",
   "base64",
 );
+
+/** Turns a confirmed test user into an admin through the privileged grant_admin RPC. */
+export async function grantAdmin(email: string): Promise<void> {
+  const { error } = await adminClient().rpc("grant_admin", { p_email: email });
+  if (error) throw error;
+}
+
+/** Gives an admin back their previous role through the privileged revoke_admin RPC. */
+export async function revokeAdmin(email: string): Promise<void> {
+  const { error } = await adminClient().rpc("revoke_admin", { p_email: email });
+  if (error) throw error;
+}

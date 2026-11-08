@@ -7,14 +7,14 @@ export type Database = {
           Tables: {
             "profiles": {
                   Row: {
-                    "avatar_path": string | null,"banner_path": string | null,"bio": string | null,"created_at": string,"curator_type": Database["public"]['Enums']["curator_type"] | null,"display_name": string,"genres": (string)[],"id": string,"links": NonNullable<Json>,"location": string | null,"role": Database["public"]['Enums']["user_role"],"slug": string,"updated_at": string
+                    "avatar_path": string | null,"banner_path": string | null,"bio": string | null,"created_at": string,"curator_type": Database["public"]['Enums']["curator_type"] | null,"display_name": string,"genres": (string)[],"id": string,"links": NonNullable<Json>,"location": string | null,"previous_role": Database["public"]['Enums']["user_role"] | null,"role": Database["public"]['Enums']["user_role"],"slug": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "avatar_path"?: string | null,"banner_path"?: string | null,"bio"?: string | null,"created_at"?: string,"curator_type"?: Database["public"]['Enums']["curator_type"] | null,"display_name": string,"genres"?: (string)[],"id": string,"links"?: NonNullable<Json>,"location"?: string | null,"role": Database["public"]['Enums']["user_role"],"slug": string,"updated_at"?: string
+                    "avatar_path"?: string | null,"banner_path"?: string | null,"bio"?: string | null,"created_at"?: string,"curator_type"?: Database["public"]['Enums']["curator_type"] | null,"display_name": string,"genres"?: (string)[],"id": string,"links"?: NonNullable<Json>,"location"?: string | null,"previous_role"?: Database["public"]['Enums']["user_role"] | null,"role": Database["public"]['Enums']["user_role"],"slug": string,"updated_at"?: string
                   }
                   Update: {
-                    "avatar_path"?: string | null,"banner_path"?: string | null,"bio"?: string | null,"created_at"?: string,"curator_type"?: Database["public"]['Enums']["curator_type"] | null,"display_name"?: string,"genres"?: (string)[],"id"?: string,"links"?: NonNullable<Json>,"location"?: string | null,"role"?: Database["public"]['Enums']["user_role"],"slug"?: string,"updated_at"?: string
+                    "avatar_path"?: string | null,"banner_path"?: string | null,"bio"?: string | null,"created_at"?: string,"curator_type"?: Database["public"]['Enums']["curator_type"] | null,"display_name"?: string,"genres"?: (string)[],"id"?: string,"links"?: NonNullable<Json>,"location"?: string | null,"previous_role"?: Database["public"]['Enums']["user_role"] | null,"role"?: Database["public"]['Enums']["user_role"],"slug"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     
@@ -45,12 +45,21 @@ isOneToOne: false
             [_ in never]: never
           }
           Functions: {
-            "slugify_unique":
+            "grant_admin":
+{ Args: { "p_email": string }; Returns: undefined
+                           },
+"is_admin":
+{ Args: { "p_uid"?: string }; Returns: boolean
+                           },
+"revoke_admin":
+{ Args: { "p_email": string }; Returns: undefined
+                           },
+"slugify_unique":
 { Args: { "name": string }; Returns: string
                            }
           }
           Enums: {
-            "curator_type": "playlist"|"label"|"radio"|"blog","release_status": "released"|"upcoming"|"demo","track_status": "draft"|"published","user_role": "artist"|"curator"
+            "curator_type": "playlist"|"label"|"radio"|"blog","release_status": "released"|"upcoming"|"demo","track_status": "draft"|"published","user_role": "artist"|"curator"|"admin"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -166,7 +175,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "curator_type": ["playlist", "label", "radio", "blog"],"release_status": ["released", "upcoming", "demo"],"track_status": ["draft", "published"],"user_role": ["artist", "curator"]
+            "curator_type": ["playlist", "label", "radio", "blog"],"release_status": ["released", "upcoming", "demo"],"track_status": ["draft", "published"],"user_role": ["artist", "curator", "admin"]
           }
         }
 } as const

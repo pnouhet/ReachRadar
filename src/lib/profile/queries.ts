@@ -42,7 +42,7 @@ export const getCurrentProfile = cache(async (): Promise<Profile> => {
   return {
     id: row.id,
     email: auth.user.email ?? "",
-    role: row.role,
+    role: row.role === "admin" ? "artist" : row.role, // replaced by the view role in the admin strip task
     displayName: row.display_name,
     slug: row.slug,
     bio: row.bio,
