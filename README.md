@@ -73,6 +73,23 @@ npm run test:e2e
 - `test:integration` — database rules (triggers, RLS, storage policies) against the Supabase project; creates and deletes its own test users.
 - `test:e2e` — Playwright (Chromium) against `npm run dev`; uses the same test-user helpers. Set `BASE_URL` to run against a deployment.
 
+## Admin accounts
+
+An admin sees every page of the app the way an artist or a curator sees it: a yellow strip above the top bar switches between the two views, and links to the design system (also reachable in production for admins only).
+Admin accounts are checking accounts: their profile and tracks are hidden from every non-admin user.
+
+Nobody can sign up as admin. Turn an existing, confirmed account into an admin (and back) from your machine:
+
+```bash
+npm run admin:grant -- someone@example.com
+```
+
+```bash
+npm run admin:revoke -- someone@example.com
+```
+
+The person must log out and back in to see the change. Revoking signs them out everywhere, but a page already open can keep admin access for up to 1 hour.
+
 ## Deployment
 
 The GitHub repository is linked to a Vercel project: every push deploys a preview, `main` deploys production.
