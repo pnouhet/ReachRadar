@@ -1,5 +1,5 @@
 import { Coins, Headphones, Star } from "lucide-react";
-import { CONTAINER, LABEL } from "@/components/home/parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 import { Button } from "@/components/ui/Button";
 import { PRICING } from "@/content/pricing";
 import { cn } from "@/lib/cn";

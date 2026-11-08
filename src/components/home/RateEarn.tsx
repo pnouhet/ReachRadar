@@ -6,16 +6,15 @@ import { HOME } from "@/content/home";
 import { cn } from "@/lib/cn";
 import {
   Benefits,
-  CONTAINER,
   FAKE_PRIMARY,
   GRADIENT_TITLE,
-  LABEL,
   Lines,
   SECTION,
   SPLIT,
   SPLIT_CARD,
   SPLIT_COPY,
 } from "./parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 import { Waveform } from "./Waveform";
 
 const { rateEarn } = HOME;

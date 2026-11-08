@@ -6,14 +6,13 @@ import { SectionBadge } from "@/components/ui/SectionBadge";
 import { HOME } from "@/content/home";
 import {
   Benefits,
-  CONTAINER,
   GRADIENT_TITLE,
-  LABEL,
   SECTION,
   SPLIT,
   SPLIT_CARD,
   SPLIT_COPY,
 } from "./parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 
 const { preTest } = HOME;
 const { card } = preTest;

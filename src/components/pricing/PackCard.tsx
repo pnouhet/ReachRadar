@@ -1,8 +1,12 @@
 import { Check } from "lucide-react";
-import { LABEL } from "@/components/home/parts";
+import { LABEL } from "@/components/site/layout";
 import { Button } from "@/components/ui/Button";
-import type { Pack } from "@/content/pricing";
+import { PRICING, type Pack } from "@/content/pricing";
 import { cn } from "@/lib/cn";
+
+const { packCard: t } = PRICING;
+const fill = (template: string, n: number) =>
+  template.replace("{n}", String(n));
 
 /** One credit pack. The popular one gets the cyan border and the "Most popular" tab. */
 export function PackCard({ pack, href }: { pack: Pack; href: string }) {
@@ -22,14 +26,16 @@ export function PackCard({ pack, href }: { pack: Pack; href: string }) {
             "slant absolute top-[-12px] left-[26.5px] inline-flex h-7 items-center px-4 text-midnight [--slant-bg:#fff] [--slant-border:#fff] [--slant-h:28px]",
           )}
         >
-          Most popular
+          {t.popular}
         </span>
       )}
 
       <div className="flex min-h-[22px] items-center justify-between">
         <h3 className={cn(LABEL, "text-cyan")}>{pack.name}</h3>
         {pack.save && (
-          <p className={cn(LABEL, "px-2 text-success")}>Save {pack.save}%</p>
+          <p className={cn(LABEL, "px-2 text-success")}>
+            {fill(t.save, pack.save)}
+          </p>
         )}
       </div>
 
@@ -38,9 +44,11 @@ export function PackCard({ pack, href }: { pack: Pack; href: string }) {
           <span className="font-display text-[52px] leading-[56px] font-extrabold">
             {pack.credits}
           </span>
-          <span className="text-body-md">credits</span>
+          <span className="text-body-md">{t.credits}</span>
         </p>
-        <p className="text-body-sm text-muted">≈ {pack.pitches} pitches</p>
+        <p className="text-body-sm text-muted">
+          {fill(t.pitches, pack.pitches)}
+        </p>
       </div>
 
       <p className="flex flex-wrap items-baseline gap-x-2.5">
@@ -48,7 +56,7 @@ export function PackCard({ pack, href }: { pack: Pack; href: string }) {
           €{pack.price}
         </span>
         <span className="text-body-sm text-soft-white">
-          €{pack.perCredit} per credit
+          €{pack.perCredit} {t.perCredit}
         </span>
       </p>
 
@@ -73,7 +81,7 @@ export function PackCard({ pack, href }: { pack: Pack; href: string }) {
         variant={pack.popular ? "primary" : "secondary"}
         className="mt-auto self-center"
       >
-        Buy {pack.credits} credits
+        {fill(t.buy, pack.credits)}
       </Button>
     </article>
   );

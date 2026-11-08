@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ListMusic, Newspaper, Radio, ShieldCheck } from "lucide-react";
-import { CONTAINER, LABEL } from "@/components/home/parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 import { cn } from "@/lib/cn";
 import { PRICING } from "@/content/pricing";
 

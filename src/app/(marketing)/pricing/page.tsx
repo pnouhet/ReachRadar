@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Check, Coins, ShieldCheck } from "lucide-react";
 import Link from "next/link";
-import { CONTAINER, LABEL } from "@/components/home/parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 import { EarnBand } from "@/components/pricing/EarnBand";
 import { Faq } from "@/components/pricing/Faq";
 import { PackCard } from "@/components/pricing/PackCard";
@@ -14,8 +14,7 @@ import { buyCreditsHref } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Buy credits",
-  description:
-    "One credit system for every curator. Pay per pitch, no subscription: useful feedback within 7 days, or your credits come back.",
+  description: PRICING.meta.description,
 };
 
 const { packsIntro, packs, assurance, faqIntro, faq } = PRICING;

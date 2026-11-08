@@ -3,9 +3,6 @@ import { Fragment, type HTMLAttributes } from "react";
 import type { AvatarTone } from "@/content/home";
 import { cn } from "@/lib/cn";
 
-/** Prototype `.container`: 1320px wide, inside the page gutter (set on <main> by HomeMotion). */
-export const CONTAINER = "mx-auto w-[min(1320px,100%_-_2*var(--gutter))]";
-
 /** Prototype `.section`: section gap above (160 / 128 / 96 px). */
 export const SECTION = "pt-(--section-gap)";
 
@@ -20,8 +17,6 @@ export const SPLIT_COPY = "flex min-w-0 flex-1 flex-col items-start gap-8";
 /** Mock cards in a split: fixed width on desktop, centred under 1100px. */
 export const SPLIT_CARD =
   "max-w-full rounded-xs border border-border-subtle bg-surface-1 max-[1100px]:w-[min(614px,100%)] max-[1100px]:flex-none max-[1100px]:self-center";
-
-export const LABEL = "text-label-strong";
 
 /** Inert look-alike of the primary Button, for the illustration cards. */
 export const FAKE_PRIMARY =

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { HOME } from "@/content/home";
-import { CONTAINER, LABEL, SECTION, ToneAvatar } from "./parts";
+import { SECTION, ToneAvatar } from "./parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 
 const { testimonialsHead: head, testimonials } = HOME;
 

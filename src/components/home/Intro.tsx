@@ -1,6 +1,6 @@
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { HOME } from "@/content/home";
-import { CONTAINER } from "./parts";
+import { CONTAINER } from "@/components/site/layout";
 
 const { intro, stats } = HOME;
 

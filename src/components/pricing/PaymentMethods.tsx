@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
-import { CONTAINER, LABEL } from "@/components/home/parts";
+import { CONTAINER, LABEL } from "@/components/site/layout";
 import { PRICING } from "@/content/pricing";
 import { cn } from "@/lib/cn";
 
@@ -10,7 +10,7 @@ const { payments } = PRICING;
 export function PaymentMethods() {
   return (
     <section
-      aria-label="Payment methods"
+      aria-label={payments.label}
       className={cn(
         CONTAINER,
         "flex flex-col items-center gap-5 pt-24 pb-32 text-center max-[860px]:pt-16 max-[860px]:pb-24",

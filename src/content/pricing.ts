@@ -22,6 +22,11 @@ export const PRICING = {
     lead: "One credit system for every curator. Useful feedback within 7 days, or your credits come back.",
   },
 
+  meta: {
+    description:
+      "One credit system for every curator. Pay per pitch, no subscription: useful feedback within 7 days, or your credits come back.",
+  },
+
   how: {
     label: "How credits work",
     title: "1 pitch = 1 to 3 credits",
@@ -54,6 +59,15 @@ export const PRICING = {
       icon: "shield-check",
     },
   ] as const,
+
+  packCard: {
+    popular: "Most popular",
+    save: "Save {n}%",
+    pitches: "≈ {n} pitches",
+    credits: "credits",
+    perCredit: "per credit",
+    buy: "Buy {n} credits",
+  },
 
   packsIntro: {
     title: "Choose your pack",
@@ -170,12 +184,12 @@ export const PRICING = {
     {
       question: "What if a curator doesn't answer?",
       answer:
-        "Nothing is charged for a pitch that goes unanswered. If a curator hasn't replied within 7 days, the credits are released and go back to your balance automatically.",
+        "You only pay once a curator answers. If there is no answer within 7 days, the curator isn't paid and your credits come back to you.",
     },
     {
       question: "Can I get a refund on unused credits?",
       answer:
-        "Credits you bought and haven't spent can be refunded within 14 days of purchase. After that they stay on your account and never expire, so you can use them whenever you pitch next.",
+        "Your credits come back if the feedback isn't useful or a curator doesn't answer within 7 days. Credits you buy never expire, so unused ones stay on your account. For anything else, contact support.",
     },
     {
       question: "How much does each curator cost?",
@@ -190,11 +204,12 @@ export const PRICING = {
     {
       question: "Do you issue invoices for labels?",
       answer:
-        "Yes. Every purchase comes with an invoice that includes VAT, and the Label pack lets you add your company name and VAT number so the invoice is ready for your accounting.",
+        "The Label pack includes invoices with your VAT number. If you need anything else for your accounting, contact support.",
     },
   ] satisfies FaqItem[],
 
   payments: {
+    label: "Payment methods",
     head: "Secure payment · processed by",
     processor: {
       name: "Stripe",

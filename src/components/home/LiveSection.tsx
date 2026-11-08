@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { HOME } from "@/content/home";
 import { LiveTabs } from "./LiveTabs";
-import { CONTAINER, Lines } from "./parts";
+import { Lines } from "./parts";
+import { CONTAINER } from "@/components/site/layout";
 
 const { live } = HOME;
 

@@ -4,7 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SectionBadge } from "@/components/ui/SectionBadge";
 import { HOME } from "@/content/home";
-import { CONTAINER, GRADIENT_TITLE, Lines, SECTION } from "./parts";
+import { GRADIENT_TITLE, Lines, SECTION } from "./parts";
+import { CONTAINER } from "@/components/site/layout";
 
 const { categoriesHead: head, categories } = HOME;
 
