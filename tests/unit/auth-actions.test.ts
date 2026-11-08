@@ -7,6 +7,7 @@ const auth = {
   resend: vi.fn(),
   updateUser: vi.fn(),
   signOut: vi.fn(),
+  getUser: vi.fn(),
 };
 
 vi.mock("@/lib/supabase/server", () => ({ createServerSupabase: async () => ({ auth }) }));
@@ -22,7 +23,7 @@ vi.mock("next/navigation", () => ({
   },
 }));
 
-const { signIn, signUp, requestPasswordReset } = await import("@/lib/auth/actions");
+const { signIn, signUp, requestPasswordReset, changePassword } = await import("@/lib/auth/actions");
 
 function form(fields: Record<string, string>) {
   const fd = new FormData();
@@ -103,5 +104,32 @@ describe("requestPasswordReset", () => {
     const b = await requestPasswordReset(initial, form({ email: "unknown@b.co" }));
     expect(a).toEqual(b);
     expect(a.message).toBe("If an account exists, we sent you a link.");
+  });
+});
+
+describe("changePassword", () => {
+  beforeEach(() => {
+    auth.getUser.mockResolvedValue({ data: { user: { email: "me@b.co" } }, error: null });
+  });
+
+  it("refuses when the current password is wrong", async () => {
+    auth.signInWithPassword.mockResolvedValue({ data: {}, error: { code: "invalid_credentials", message: "x" } });
+    const r = await changePassword(initial, form({ current: "nope", password: "midnight24", confirm: "midnight24" }));
+    expect(r.fieldErrors?.current).toBe("Current password is incorrect.");
+    expect(auth.updateUser).not.toHaveBeenCalled();
+  });
+
+  it("refuses a confirmation that does not match", async () => {
+    const r = await changePassword(initial, form({ current: "old", password: "midnight24", confirm: "midnight25" }));
+    expect(r.fieldErrors?.confirm).toBe("Passwords don't match.");
+  });
+
+  it("updates the password after re-checking the current one", async () => {
+    auth.signInWithPassword.mockResolvedValue({ data: { user: {} }, error: null });
+    auth.updateUser.mockResolvedValue({ data: {}, error: null });
+    const r = await changePassword(initial, form({ current: "old", password: "midnight24", confirm: "midnight24" }));
+    expect(auth.signInWithPassword).toHaveBeenCalledWith({ email: "me@b.co", password: "old" });
+    expect(auth.updateUser).toHaveBeenCalledWith({ password: "midnight24" });
+    expect(r).toEqual({ ok: true, message: "Password updated. You stay signed in on this device." });
   });
 });

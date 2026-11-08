@@ -5,7 +5,7 @@ import { fieldErrorsOf, formObject, type ActionState } from "@/lib/action-state"
 import { siteUrl } from "@/lib/supabase/env";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { safeNext } from "./safe-next";
-import { emailSchema, newPasswordSchema, signInSchema, signUpSchema } from "./schemas";
+import { changePasswordSchema, emailSchema, newPasswordSchema, signInSchema, signUpSchema } from "./schemas";
 
 const HOME = "/dashboard";
 
@@ -98,6 +98,28 @@ export async function updatePassword(_prev: ActionState, formData: FormData): Pr
     return { ok: false, error: "Your reset link has expired. Ask for a new one." };
   }
   redirect(HOME);
+}
+
+export async function changePassword(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const parsed = changePasswordSchema.safeParse(formObject(formData));
+  if (!parsed.success) return { ok: false, fieldErrors: fieldErrorsOf(parsed.error) };
+
+  const supabase = await createServerSupabase();
+  const { data } = await supabase.auth.getUser();
+  const email = data.user?.email;
+  if (!email) return { ok: false, error: "Your session has expired. Log in again." };
+
+  const check = await supabase.auth.signInWithPassword({ email, password: parsed.data.current });
+  if (check.error) return { ok: false, fieldErrors: { current: "Current password is incorrect." } };
+
+  const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
+  if (error) {
+    if (error.code === "same_password") {
+      return { ok: false, fieldErrors: { password: "Choose a password you haven't used before." } };
+    }
+    return { ok: false, error: "We couldn't update your password. Please try again." };
+  }
+  return { ok: true, message: "Password updated. You stay signed in on this device." };
 }
 
 export async function signOut(): Promise<void> {

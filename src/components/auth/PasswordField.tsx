@@ -52,9 +52,9 @@ export function PasswordField({
       />
       {showStrength && value && (
         <div className="flex items-center gap-3" aria-live="polite">
-          <div className="flex flex-1 gap-1" aria-hidden>
+          <div className="flex flex-1 gap-2" aria-hidden>
             {[1, 2, 3, 4].map((i) => (
-              <span key={i} className={cn("h-1 flex-1", i <= score ? "bg-success" : "bg-border-strong")} />
+              <span key={i} className={cn("h-1.5 flex-1 -skew-x-12 border", i <= score ? "border-success bg-success" : "border-border-strong")} />
             ))}
           </div>
           <span className="text-label-strong text-success">{STRENGTH_LABEL[score]}</span>

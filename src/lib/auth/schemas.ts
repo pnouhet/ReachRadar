@@ -52,3 +52,7 @@ export const emailSchema = z.object({ email: emailField });
 export const newPasswordSchema = z
   .object({ password: passwordSchema, confirm: z.string() })
   .refine((v) => v.password === v.confirm, { message: "Passwords don't match.", path: ["confirm"] });
+
+export const changePasswordSchema = z
+  .object({ current: z.string().min(1, "Enter your current password."), password: passwordSchema, confirm: z.string() })
+  .refine((v) => v.password === v.confirm, { message: "Passwords don't match.", path: ["confirm"] });
