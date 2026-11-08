@@ -1,6 +1,6 @@
-import { EXTRA_APP_ROUTES, NAV_ITEMS, matchesPath, type Role } from "@/lib/nav";
+import { EXTRA_APP_ROUTES, NAV_ITEMS, matchesPath, type AccountRole, type Role } from "@/lib/nav";
 
-export type RouteAccess = { action: "allow" } | { action: "redirect"; to: string };
+export type RouteAccess = { action: "allow"; setView?: Role } | { action: "redirect"; to: string };
 
 const AUTH_ONLY_FOR_GUESTS = ["/login", "/signup", "/forgot-password"];
 const HOME = "/dashboard";
@@ -12,7 +12,13 @@ function appRouteFor(pathname: string): { href: string; roles: Role[] } | null {
   return candidates.reduce((a, b) => (b.href.length > a.href.length ? b : a));
 }
 
-export function resolveRouteAccess(pathname: string, user: { role: Role } | null): RouteAccess {
+/** False only for an app page that belongs to the other role. */
+export function pageAllowedFor(pathname: string, view: Role): boolean {
+  const appRoute = appRouteFor(pathname);
+  return !appRoute || appRoute.roles.includes(view);
+}
+
+export function resolveRouteAccess(pathname: string, user: { role: AccountRole; view: Role } | null): RouteAccess {
   const appRoute = appRouteFor(pathname);
 
   if (!user) {
@@ -21,6 +27,13 @@ export function resolveRouteAccess(pathname: string, user: { role: Role } | null
   }
 
   if (AUTH_ONLY_FOR_GUESTS.some((p) => matchesPath(pathname, p))) return { action: "redirect", to: HOME };
+
+  if (user.role === "admin") {
+    // Admins open every app page; a page of the other side flips their view so the sidebar matches it.
+    if (appRoute && !appRoute.roles.includes(user.view)) return { action: "allow", setView: appRoute.roles[0] };
+    return { action: "allow" };
+  }
+
   if (appRoute && !appRoute.roles.includes(user.role)) return { action: "redirect", to: HOME };
   return { action: "allow" };
 }

@@ -14,7 +14,11 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+/** The role a page renders for (an admin's current view). */
 export type Role = "artist" | "curator";
+
+/** The role stored on the account: admins can view the app as either role. */
+export type AccountRole = Role | "admin";
 
 export type NavItem = { href: string; label: string; icon: LucideIcon; roles: Role[] };
 
