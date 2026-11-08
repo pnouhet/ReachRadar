@@ -19,6 +19,26 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"tracks": {
+                  Row: {
+                    "audio_format": string | null,"audio_path": string | null,"audio_size_bytes": number | null,"bpm": number | null,"cover_path": string | null,"created_at": string,"duration_seconds": number | null,"explicit": boolean,"featuring": string | null,"genre_primary": string | null,"genre_secondary": string | null,"id": string,"isrc": string | null,"moods": (string)[],"musical_key": string | null,"owner_id": string,"private_link": string | null,"published_at": string | null,"release_date": string | null,"release_status": Database["public"]['Enums']["release_status"] | null,"rights_confirmed": boolean,"status": Database["public"]['Enums']["track_status"],"title": string | null,"updated_at": string,"vocals": string | null,"waveform": Json | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "audio_format"?: string | null,"audio_path"?: string | null,"audio_size_bytes"?: number | null,"bpm"?: number | null,"cover_path"?: string | null,"created_at"?: string,"duration_seconds"?: number | null,"explicit"?: boolean,"featuring"?: string | null,"genre_primary"?: string | null,"genre_secondary"?: string | null,"id"?: string,"isrc"?: string | null,"moods"?: (string)[],"musical_key"?: string | null,"owner_id": string,"private_link"?: string | null,"published_at"?: string | null,"release_date"?: string | null,"release_status"?: Database["public"]['Enums']["release_status"] | null,"rights_confirmed"?: boolean,"status"?: Database["public"]['Enums']["track_status"],"title"?: string | null,"updated_at"?: string,"vocals"?: string | null,"waveform"?: Json | null
+                  }
+                  Update: {
+                    "audio_format"?: string | null,"audio_path"?: string | null,"audio_size_bytes"?: number | null,"bpm"?: number | null,"cover_path"?: string | null,"created_at"?: string,"duration_seconds"?: number | null,"explicit"?: boolean,"featuring"?: string | null,"genre_primary"?: string | null,"genre_secondary"?: string | null,"id"?: string,"isrc"?: string | null,"moods"?: (string)[],"musical_key"?: string | null,"owner_id"?: string,"private_link"?: string | null,"published_at"?: string | null,"release_date"?: string | null,"release_status"?: Database["public"]['Enums']["release_status"] | null,"rights_confirmed"?: boolean,"status"?: Database["public"]['Enums']["track_status"],"title"?: string | null,"updated_at"?: string,"vocals"?: string | null,"waveform"?: Json | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "tracks_owner_id_fkey"
+      columns: ["owner_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {
@@ -30,7 +50,7 @@ export type Database = {
                            }
           }
           Enums: {
-            "curator_type": "playlist"|"label"|"radio"|"blog","user_role": "artist"|"curator"
+            "curator_type": "playlist"|"label"|"radio"|"blog","release_status": "released"|"upcoming"|"demo","track_status": "draft"|"published","user_role": "artist"|"curator"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -146,7 +166,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "curator_type": ["playlist", "label", "radio", "blog"],"user_role": ["artist", "curator"]
+            "curator_type": ["playlist", "label", "radio", "blog"],"release_status": ["released", "upcoming", "demo"],"track_status": ["draft", "published"],"user_role": ["artist", "curator"]
           }
         }
 } as const
