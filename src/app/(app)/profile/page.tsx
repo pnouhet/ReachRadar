@@ -9,6 +9,7 @@ import { Tab } from "@/components/ui/Tab";
 import { cn } from "@/lib/cn";
 import { releaseTag, trackMeta } from "@/lib/format";
 import { getCurrentProfile } from "@/lib/profile/queries";
+import { deleteDraft } from "@/lib/tracks/actions";
 import { getMyTracks } from "@/lib/tracks/queries";
 import { artistMock } from "@/mocks";
 
@@ -73,9 +74,16 @@ export default async function MyProfilePage() {
                     play={t.audioPath ? <PlayButton trackId={t.id} title={t.title ?? "draft"} /> : undefined}
                   />
                   {t.status === "draft" && (
-                    <Link href={`/profile/upload?track=${t.id}`} className="mt-2 inline-block text-label-strong text-cyan hover:underline">
-                      Continue editing
-                    </Link>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
+                      <Link href={`/profile/upload?track=${t.id}`} className="text-label-strong text-cyan hover:underline">
+                        Continue editing
+                      </Link>
+                      <form action={deleteDraft.bind(null, t.id)}>
+                        <button type="submit" className="text-label-strong text-muted hover:text-rose hover:underline">
+                          Delete draft
+                        </button>
+                      </form>
+                    </div>
                   )}
                 </li>
               ))}

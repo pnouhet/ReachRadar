@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { Chip } from "@/components/ui/Chip";
 import { Input } from "@/components/ui/Input";
 import { INITIAL_ACTION_STATE } from "@/lib/action-state";
+import { submitKeepingValues } from "@/lib/forms";
 import { signUp } from "@/lib/auth/actions";
 import { CURATOR_TYPES, CURATOR_TYPE_LABEL, type CuratorType } from "@/lib/auth/schemas";
 import type { Role } from "@/lib/nav";
@@ -23,7 +24,7 @@ export function SignUpForm({ role }: { role: Role }) {
   const isArtist = role === "artist";
 
   return (
-    <form action={action} className="flex flex-col gap-7" noValidate>
+    <form action={action} onSubmit={submitKeepingValues(action)} className="flex flex-col gap-7" noValidate>
       <input type="hidden" name="role" value={role} />
       <StepIndicator step={2} />
       <div className="flex flex-col gap-3">

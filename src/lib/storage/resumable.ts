@@ -16,13 +16,17 @@ export const UPLOAD_FAILED = "Upload failed — check your connection and try ag
 
 /**
  * Uploads a file straight from the browser to Supabase Storage with the TUS resumable protocol
- * (6 MB chunks, automatic retries). Never goes through a Next.js route.
+ * (6 MB chunks, automatic retries within the upload). Never goes through a Next.js route.
+ *
+ * Uploads are never resumed across attempts: tus fingerprints a file by name/size/date only, so a
+ * resumed upload would keep writing to the object path of the earlier attempt, not to `path`.
  */
 export async function uploadResumable({ bucket, path, file, contentType, onProgress, signal }: ResumableOptions): Promise<void> {
   const supabase = createBrowserSupabase();
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
   if (!token) throw new Error("Your session has expired. Log in again.");
+  if (signal?.aborted) throw new DOMException("Upload cancelled", "AbortError");
 
   return new Promise<void>((resolve, reject) => {
     const upload = new tus.Upload(file, {
@@ -34,7 +38,7 @@ export async function uploadResumable({ bucket, path, file, contentType, onProgr
         "x-upsert": "false",
       },
       uploadDataDuringCreation: true,
-      removeFingerprintOnSuccess: true,
+      storeFingerprintForResuming: false,
       chunkSize: 6 * 1024 * 1024,
       metadata: { bucketName: bucket, objectName: path, contentType, cacheControl: "3600" },
       onProgress: (sent, total) => onProgress?.(total ? sent / total : 0),
@@ -47,12 +51,6 @@ export async function uploadResumable({ bucket, path, file, contentType, onProgr
       reject(new DOMException("Upload cancelled", "AbortError"));
     });
 
-    upload
-      .findPreviousUploads()
-      .then((previous) => {
-        if (previous.length) upload.resumeFromPreviousUpload(previous[0]);
-        upload.start();
-      })
-      .catch(() => reject(new Error(UPLOAD_FAILED)));
+    upload.start();
   });
 }

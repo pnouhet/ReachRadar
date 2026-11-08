@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { INITIAL_ACTION_STATE } from "@/lib/action-state";
+import { submitKeepingValues } from "@/lib/forms";
 import { requestPasswordReset, resendConfirmation, updatePassword } from "@/lib/auth/actions";
 import { FormMessage } from "./FormMessage";
 import { PasswordField } from "./PasswordField";
@@ -25,7 +26,7 @@ export function ResendConfirmationForm({ email }: { email: string }) {
 export function ForgotPasswordForm() {
   const [state, action, pending] = useActionState(requestPasswordReset, INITIAL_ACTION_STATE);
   return (
-    <form action={action} className="flex flex-col gap-7" noValidate>
+    <form action={action} onSubmit={submitKeepingValues(action)} className="flex flex-col gap-7" noValidate>
       {state.message && <FormMessage tone="success">{state.message}</FormMessage>}
       <Input label="Email" name="email" type="email" autoComplete="email" required error={state.fieldErrors?.email} />
       <Button type="submit" variant="primary" loading={pending} className="self-center">
@@ -39,7 +40,7 @@ export function ResetPasswordForm() {
   const [state, action, pending] = useActionState(updatePassword, INITIAL_ACTION_STATE);
   const fe = state.fieldErrors ?? {};
   return (
-    <form action={action} className="flex flex-col gap-7" noValidate>
+    <form action={action} onSubmit={submitKeepingValues(action)} className="flex flex-col gap-7" noValidate>
       {state.error && <FormMessage tone="error">{state.error}</FormMessage>}
       <PasswordField
         label="New password"

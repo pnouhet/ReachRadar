@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Input } from "@/components/ui/Input";
 import { INITIAL_ACTION_STATE } from "@/lib/action-state";
+import { submitKeepingValues } from "@/lib/forms";
 import { resendConfirmation, signIn } from "@/lib/auth/actions";
 import { FormMessage } from "./FormMessage";
 import { PasswordField } from "./PasswordField";
@@ -45,7 +46,7 @@ export function LoginForm({ next, linkError }: { next?: string; linkError?: bool
       )}
       {resendState.message && <FormMessage tone="success">{resendState.message}</FormMessage>}
 
-      <form action={action} className="flex flex-col gap-7" noValidate>
+      <form action={action} onSubmit={submitKeepingValues(action)} className="flex flex-col gap-7" noValidate>
         {next && <input type="hidden" name="next" value={next} />}
         <div className="flex flex-col gap-5">
           <Input label="Email" name="email" type="email" autoComplete="email" required error={fe.email} />

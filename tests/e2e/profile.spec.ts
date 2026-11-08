@@ -53,3 +53,13 @@ test("a too-small banner is refused with a clear message", async ({ page }) => {
   await page.getByTestId("banner-input").setInputFiles({ name: "b.png", mimeType: "image/png", buffer: small });
   await expect(page.getByRole("alert").filter({ hasText: "Banner must be at least 1600 × 400 px." })).toBeVisible();
 });
+
+test("an invalid link keeps the edits and points at the field", async ({ page }) => {
+  await logIn(page, artist, "/login?next=/settings/profile");
+  await page.getByLabel("Bio").fill("Edited but not saved yet.");
+  await page.getByLabel("YouTube").fill("notalink");
+  await page.getByRole("button", { name: "Save changes" }).click();
+  await expect(page.getByText("Paste a full web link.")).toBeVisible();
+  await expect(page.getByLabel("Bio")).toHaveValue("Edited but not saved yet.");
+  await expect(page.getByLabel("YouTube")).toHaveValue("notalink");
+});

@@ -84,7 +84,7 @@ async function saveFields(trackId: string, formData: FormData, publish: boolean)
   if (!userId) return { ok: false, error: "Your session has expired. Log in again." };
   if (parsed.data.coverPath && !parsed.data.coverPath.startsWith(`${userId}/`)) return { ok: false, error: "Invalid artwork." };
 
-  const { data: track } = await supabase.from("tracks").select("id, audio_path").eq("id", trackId).single();
+  const { data: track } = await supabase.from("tracks").select("id, audio_path, cover_path").eq("id", trackId).single();
   if (!track) return { ok: false, error: "This track no longer exists." };
 
   if (publish) {
@@ -100,6 +100,7 @@ async function saveFields(trackId: string, formData: FormData, publish: boolean)
     .update({ ...toColumns(parsed.data), ...(publish ? { status: "published" as const } : {}) })
     .eq("id", trackId);
   if (error) return { ok: false, error: "We couldn't save this track. Please try again." };
+  if (track.cover_path && track.cover_path !== parsed.data.coverPath) await supabase.storage.from("covers").remove([track.cover_path]);
 
   revalidatePath("/profile");
   return { ok: true, message: publish ? "Published" : "Draft saved" };
@@ -125,4 +126,11 @@ export async function deleteTrack(trackId: string): Promise<ActionState> {
   if (track?.cover_path) await supabase.storage.from("covers").remove([track.cover_path]);
   revalidatePath("/profile");
   return { ok: true };
+}
+
+/** Form action for the "Delete draft" button on My profile. Only drafts can be deleted this way. */
+export async function deleteDraft(trackId: string): Promise<void> {
+  const { supabase } = await session();
+  const { data: track } = await supabase.from("tracks").select("status").eq("id", trackId).single();
+  if (track?.status === "draft") await deleteTrack(trackId);
 }

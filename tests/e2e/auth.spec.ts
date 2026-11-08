@@ -88,3 +88,30 @@ test("signed-in users are kept away from the login page", async ({ page }) => {
   await page.goto("/login");
   await expect(page).toHaveURL(/\/dashboard$/);
 });
+
+test("a wrong password keeps the email that was typed", async ({ page }) => {
+  await page.goto("/login");
+  await page.getByLabel("Email").fill(artist.email);
+  await page.getByLabel("Password", { exact: true }).fill("not-the-password-1");
+  await page.getByRole("button", { name: "Log in" }).click();
+  await expect(page.getByRole("alert").filter({ hasText: "Wrong email or password." })).toBeVisible();
+  await expect(page.getByLabel("Email")).toHaveValue(artist.email);
+});
+
+test("a crafted next link cannot send a fresh login to another site", async ({ page }) => {
+  await logIn(page, artist, "/login?next=%2F%09%2Fexample.com");
+  await expect(page).toHaveURL(/^http:\/\/localhost:3000\/dashboard$/);
+});
+
+test("a sign-up refused by the server keeps everything that was typed", async ({ page }) => {
+  await page.goto("/signup/artist");
+  await page.getByLabel("Artist name").fill("Keep Me");
+  await page.getByLabel("Email").fill("keep-me@example.com");
+  await page.getByLabel("Password", { exact: true }).fill("short");
+  await page.getByText(/I accept the Terms/).click();
+  await page.getByRole("button", { name: "Create my account" }).click();
+  await expect(page.getByLabel("Password", { exact: true })).toHaveAttribute("aria-invalid", "true");
+  await expect(page.getByLabel("Artist name")).toHaveValue("Keep Me");
+  await expect(page.getByLabel("Email")).toHaveValue("keep-me@example.com");
+  await expect(page.getByLabel(/I accept the Terms/)).toBeChecked();
+});

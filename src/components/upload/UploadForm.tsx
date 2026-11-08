@@ -10,6 +10,7 @@ import { Chip } from "@/components/ui/Chip";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { INITIAL_ACTION_STATE, type ActionState } from "@/lib/action-state";
+import { submitKeepingValues } from "@/lib/forms";
 import { audioContentType, validateAudioFile } from "@/lib/audio/validate";
 import { decodeAudio } from "@/lib/audio/waveform";
 import { cn } from "@/lib/cn";
@@ -19,7 +20,7 @@ import { storagePath } from "@/lib/storage/paths";
 import { UPLOAD_FAILED, uploadResumable } from "@/lib/storage/resumable";
 import { uploadImage } from "@/lib/storage/upload-image";
 import { publishChecklist } from "@/lib/tracks/checklist";
-import { createDraftTrack, getTrackAudioUrl, publishTrack, saveTrackDraft, setTrackAudio } from "@/lib/tracks/actions";
+import { createDraftTrack, deleteTrack, getTrackAudioUrl, publishTrack, saveTrackDraft, setTrackAudio } from "@/lib/tracks/actions";
 import type { Track } from "@/lib/tracks/queries";
 import { MOODS, RELEASE_LABEL, RELEASE_STATUSES, VOCALS, type ReleaseStatus } from "@/lib/tracks/schemas";
 import { ArtworkPanel, type ArtworkState } from "./ArtworkPanel";
@@ -83,7 +84,13 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
     const check = validateAudioFile(file);
     if (!check.ok) return setAudioError(check.error);
 
+    abort.current?.abort();
+    const controller = new AbortController();
+    abort.current = controller;
+    const previous = audio?.uploaded ? audio : null;
+
     let id = trackId;
+    const draftCreatedHere = !id;
     if (!id) {
       const draft = await createDraftTrack();
       if ("error" in draft) return setAudioError(draft.error);
@@ -92,9 +99,6 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
     }
 
     const path = storagePath(userId, "track", check.format);
-    abort.current?.abort();
-    const controller = new AbortController();
-    abort.current = controller;
     setAudio({ name: file.name, format: check.format, sizeBytes: file.size, durationSeconds: null, peaks: null, progress: 0, uploaded: false, src: null });
 
     try {
@@ -129,16 +133,21 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
       });
       if (!decoded) setAudioError("Uploaded, but your browser can't preview this file. You can still publish it.");
     } catch (e) {
-      if (controller.signal.aborted) return;
-      setAudio(null);
-      setAudioError(e instanceof Error && e.message ? e.message : UPLOAD_FAILED);
+      // A newer pick took over: it owns the draft and the panel state now.
+      if (abort.current !== controller) return;
+      abort.current = null;
+      if (draftCreatedHere) {
+        // Don't leave an empty "Untitled draft" behind on My profile.
+        setTrackId(null);
+        void deleteTrack(id);
+      }
+      setAudio(previous);
+      setAudioError(controller.signal.aborted ? "Upload cancelled." : e instanceof Error && e.message ? e.message : UPLOAD_FAILED);
     }
   }
 
   function cancelAudio() {
     abort.current?.abort();
-    setAudio(null);
-    setAudioError("Upload cancelled.");
   }
 
   async function onPickArtwork(file: File) {
@@ -167,7 +176,7 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
     setMoods((cur) => (cur.includes(m) ? cur.filter((x) => x !== m) : cur.length < 3 ? [...cur, m] : cur));
 
   return (
-    <form action={publishAction} className="flex flex-col gap-6 xl:flex-row xl:items-start" noValidate>
+    <form action={publishAction} onSubmit={submitKeepingValues((fd) => (fd.get("intent") === "save" ? saveAction : publishAction)(fd))} className="flex flex-col gap-6 xl:flex-row xl:items-start" noValidate>
       <input type="hidden" name="coverPath" value={artwork?.path ?? ""} />
       <input type="hidden" name="releaseStatus" value={releaseStatus ?? ""} />
       {moods.map((m) => (
@@ -291,7 +300,7 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
             {(result.error || (result.ok && result.message)) && (
               <FormMessage tone={result.ok ? "success" : "error"}>{result.ok ? "Changes saved" : result.error}</FormMessage>
             )}
-            <Button type="submit" formAction={saveAction} variant="ghost" loading={saving} className="self-start">
+            <Button type="submit" name="intent" value="save" variant="ghost" loading={saving} className="self-start">
               Save changes
             </Button>
           </section>
@@ -320,7 +329,7 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
             <Button type="submit" variant="primary" loading={publishing} disabled={!checklist.canPublish || uploading} className="self-start">
               Publish track
             </Button>
-            <Button type="submit" formAction={saveAction} variant="ghost" loading={saving} disabled={uploading} className="self-start">
+            <Button type="submit" name="intent" value="save" variant="ghost" loading={saving} disabled={uploading} className="self-start">
               Save as draft
             </Button>
             <p className="text-body-sm text-muted">Next: a free pre-test (20 anonymous ratings), then pitch it to curators.</p>

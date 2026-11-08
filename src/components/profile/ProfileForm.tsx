@@ -8,6 +8,7 @@ import { Chip } from "@/components/ui/Chip";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { INITIAL_ACTION_STATE } from "@/lib/action-state";
+import { submitKeepingValues } from "@/lib/forms";
 import { FEATURED_GENRES, GENRES } from "@/lib/genres";
 import { updateProfile } from "@/lib/profile/actions";
 import type { Profile } from "@/lib/profile/queries";
@@ -28,7 +29,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
     setGenres((cur) => (cur.includes(g) ? cur.filter((x) => x !== g) : cur.length < MAX_GENRES ? [...cur, g] : cur));
 
   return (
-    <form action={action} className="flex flex-col gap-8">
+    <form action={action} onSubmit={submitKeepingValues(action)} className="flex flex-col gap-8">
       {state.ok && state.message && <FormMessage tone="success">{state.message}</FormMessage>}
       {state.error && <FormMessage tone="error">{state.error}</FormMessage>}
 
