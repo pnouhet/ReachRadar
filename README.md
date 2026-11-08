@@ -77,9 +77,9 @@ npm run test:e2e
 
 Visible to everyone, no login needed:
 
-- `/` � home
-- `/pricing` � credit packs, how to earn credits, FAQ
-- `/legal/<slug>` � `privacy`, `gdpr`, `cookies`, `terms`, `legal-notice`
+- `/` — home
+- `/pricing` — credit packs, how to earn credits, FAQ
+- `/legal/<slug>` — `privacy`, `gdpr`, `cookies`, `terms`, `legal-notice`
 
 All page copy lives in `src/content/*` (`home.ts`, `pricing.ts`, `legal/`), not in the components.
 The cookie banner stores the visitor's choice in the `rr_consent` cookie (`v1.<analytics>.<marketing>`, for example `v1.0.0` when everything optional is rejected).
