@@ -49,7 +49,14 @@ test("a signed-in user sees Dashboard in the header", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("the newsletter validates the email and confirms", async ({ page }) => {
+test("the newsletter validates the email and confirms", async ({
+  page,
+  context,
+}) => {
+  // On the full-length home the footer form scrolls in under the cookie banner.
+  await context.addCookies([
+    { name: "rr_consent", value: "v1.0.0", url: "http://localhost:3000" },
+  ]);
   await page.goto("/");
   const footer = page.getByRole("contentinfo");
   await footer.getByLabel("Email").fill("not-an-email");

@@ -8,11 +8,19 @@ const SOCIALS = [
   { name: "Spotify", src: "/home/spotify.svg" },
 ];
 
-/** Brand marks only: ReachRadar has no public social accounts yet, so they are not links. */
-export function SocialIcons() {
+/** Brand marks only (hero: 40px apart, footer: 28px): ReachRadar has no public social accounts yet, so they are not links. */
+export function SocialIcons({
+  spacing = "footer",
+}: {
+  spacing?: "footer" | "hero";
+}) {
   return (
     <ul
-      className="flex gap-7 max-[860px]:gap-6"
+      className={
+        spacing === "hero"
+          ? "flex gap-10 max-[860px]:gap-6"
+          : "flex gap-7 max-[860px]:gap-6"
+      }
       aria-label="ReachRadar on social media"
     >
       {SOCIALS.map((s) => (

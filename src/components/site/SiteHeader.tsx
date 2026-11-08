@@ -38,6 +38,7 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
   return (
     <>
       <header
+        data-anim="nav"
         className={cn(
           "z-50 transition-[background-color,padding,backdrop-filter] duration-300 motion-reduce:transition-none",
           solid

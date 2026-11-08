@@ -198,3 +198,32 @@
     transition: background-color 0.2s, border-color 0.2s;
   }
 }
+
+/* ---------- Home motion (prototype port) ---------- */
+@theme {
+  --animate-nudge: nudge 1.8s ease-in-out infinite;
+  --animate-pulse: pulse 2s ease-in-out infinite;
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+}
+
+/* Set by AnimGate until GSAP has applied its start states (never longer than 2.5 s). */
+.anim-pending [data-anim] {
+  visibility: hidden;
+}

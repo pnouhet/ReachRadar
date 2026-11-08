@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="305.27" height="353" viewBox="0 0 305.27 353" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="Fade" d="M20 0H305.27L285.5 353H0L20 0Z" fill="url(#paint0_linear_0_131)"/>
+<defs>
+<linearGradient id="paint0_linear_0_131" x1="153" y1="-7" x2="153" y2="353" gradientUnits="userSpaceOnUse">
+<stop offset="0.35" stop-color="#0D1B2A" stop-opacity="0"/>
+<stop offset="1" stop-color="#0D1B2A" stop-opacity="0.9"/>
+</linearGradient>
+</defs>
+</svg>
