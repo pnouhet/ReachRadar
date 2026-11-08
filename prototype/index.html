@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReachRadar · Get heard by new fans</title>
+  <meta name="description" content="Pitch your tracks to Spotify curators, labels, radios and blogs. Get honest feedback from artists. Grow real fans.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Hide the hero until GSAP has set its start states; never longer than 2.5 s.
+    document.documentElement.classList.add('js', 'anim-pending');
+    setTimeout(function () { document.documentElement.classList.remove('anim-pending'); }, 2500);
+  </script>
+</head>
+<body>
+
+  <!-- Outline text without the font's inner overlapping contours:
+       the glyphs' filled shape is grown by 1.5px, then the shape itself is cut out. -->
+  <svg class="sr-only" aria-hidden="true" focusable="false">
+    <filter id="text-outline" x="-5%" y="-10%" width="110%" height="120%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="1.5" result="grown"/>
+      <feComposite in="grown" in2="SourceAlpha" operator="out" result="ring"/>
+      <feFlood flood-color="#fff"/>
+      <feComposite in2="ring" operator="in"/>
+    </filter>
+  </svg>
+
+  <!-- Navbar -->
+  <header class="nav" data-anim="nav">
+    <div class="nav__inner">
+      <div class="nav__tools">
+        <button class="icon-btn" type="button" aria-label="Open menu"><img src="assets/icons/menu.svg" width="40" height="40" alt=""></button>
+        <button class="icon-btn" type="button" aria-label="Search"><img src="assets/icons/search.svg" width="40" height="40" alt=""></button>
+      </div>
+      <a class="nav__logo" href="#" aria-label="ReachRadar home"><img src="assets/icons/wordmark.svg" width="400" height="20" alt="ReachRadar"></a>
+      <a class="signup" href="#">
+        <img class="signup__bg" src="assets/icons/signup-bg.svg" alt="">
+        <span class="signup__content"><img src="assets/icons/user.svg" width="20" height="20" alt=""><span>Sign Up</span></span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero + 01 Get heard -->
+    <div class="top">
+      <div class="top__bg" aria-hidden="true">
+        <img class="top__photo" src="assets/img/hero-bg.jpg" alt="">
+        <div class="top__shade"></div>
+        <div class="top__dots"></div>
+      </div>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__line hero__line--solid">REACHRADAR</span>
+          <span class="hero__line hero__line--outline" aria-hidden="true">REACHRADAR</span>
+        </h1>
+        <div class="hero__cta">
+          <p class="hero__lead" data-anim="hero-lead">Pitch your tracks to Spotify curators, labels, radios and blogs. <br>Get honest feedback from artists. Grow real fans.</p>
+          <div class="btn-row" data-anim="hero-btns">
+            <a class="btn btn--primary" href="#">Start pitching</a>
+            <a class="btn btn--outline" href="#">Rate songs, earn credits</a>
+          </div>
+        </div>
+        <div class="hero__bar" data-anim="hero-bar">
+          <a class="scroll-hint" href="#get-heard">
+            <img src="assets/icons/arrow-drop-down.svg" width="24" height="24" alt="">
+            <span>Scroll down</span>
+          </a>
+          <ul class="socials" aria-label="ReachRadar on social media">
+            <li><a href="#" aria-label="SoundCloud"><img src="assets/icons/soundcloud.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="YouTube"><img src="assets/icons/youtube.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="Deezer"><img src="assets/icons/deezer.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="TikTok"><img src="assets/icons/tiktok.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="Spotify"><img src="assets/icons/spotify.svg" width="24" height="24" alt=""></a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="intro" id="get-heard" aria-labelledby="intro-title">
+        <div class="container intro__inner">
+          <span class="badge badge--hero reveal-badge">
+            <img src="assets/icons/badge-hero.svg" alt="">
+            <span>01</span>
+          </span>
+          <div class="intro__copy">
+            <h2 class="intro__title reveal-title" id="intro-title">Get heard by new fans</h2>
+            <p class="intro__text reveal-up">Introducing the latest music platform designed to help artists find new fans ! This innovative platform offers a unique approach to music discovery, connecting artists with listeners who appreciate their style and genre. With a sophisticated algorithm that analyzes listening habits and preferences, the platform matches artists with the right audience, increasing exposure and engagement. It's easy to use and offers a range of tools to help artists promote their music, from customizable profiles to targeted marketing campaigns. With this platform, artists can finally reach their full potential and find the audience they deserve.</p>
+          </div>
+          <dl class="stats">
+            <div class="stat"><dt class="stat__value"><span data-count="800" data-prefix="+">+800</span></dt><dd class="stat__label">Submitted songs</dd></div>
+            <div class="stat"><dt class="stat__value"><span data-count="2" data-prefix="+" data-suffix="k">+2k</span></dt><dd class="stat__label">Satisfied clients</dd></div>
+            <div class="stat"><dt class="stat__value"><span data-count="473">473</span></dt><dd class="stat__label">New fans per tracks</dd></div>
+            <div class="stat"><dt class="stat__value"><span data-count="9">9</span></dt><dd class="stat__label stat__label--lg">Artists awards</dd></div>
+          </dl>
+        </div>
+      </section>
+    </div>
+
+    <!-- Go ahead -->
+    <section class="live" aria-labelledby="live-title">
+      <div class="container live__inner">
+        <div class="live__quote">
+          <img class="live__quote-mark" src="assets/icons/quote-left.svg" width="44" height="44" alt="">
+          <div class="live__copy">
+            <h2 class="live__title reveal-title" id="live-title">Go ahead,<br>live from<br>your music !</h2>
+            <p class="live__text reveal-up">We help artists in their music career. Sometimes the <br>artists we coached gets awards or build impressive fanbase. <br>Now flying the flag for the next best songs that tells stories.</p>
+          </div>
+        </div>
+        <div class="live__media">
+          <div class="live__frame">
+            <img class="live__img" src="assets/img/live-crowd.png" width="587" height="500" alt="A crowd raising hands in front of a stage lit in blue">
+          </div>
+          <div class="tabs" role="tablist">
+            <button class="tab is-active" role="tab" aria-selected="true" type="button">Teaser trailer</button>
+            <button class="tab" role="tab" aria-selected="false" type="button">Behind the scenes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 How it works -->
+    <section class="section section--center" aria-labelledby="promises-title">
+      <div class="container">
+        <header class="section-head section-head--center">
+          <span class="badge reveal-badge"><img src="assets/icons/section-badge.svg" alt=""><span>02</span></span>
+          <h2 class="gradient-title reveal-title" id="promises-title">Three promises</h2>
+          <p class="section-sub reveal-up">Pitch smarter. Pay only for real feedback. Grow real fans.</p>
+        </header>
+        <ol class="steps">
+          <li class="step">
+            <img class="step__icon" src="assets/icons/shield-check.svg" width="32" height="32" alt="">
+            <span class="step__num">01</span>
+            <h3 class="step__title">Useful or refunded</h3>
+            <p class="step__text">Rate every answer. Generic feedback can be disputed, reviewed in 48 h, and your credits come back.</p>
+          </li>
+          <li class="step">
+            <img class="step__icon" src="assets/icons/headphones.svg" width="32" height="32" alt="">
+            <span class="step__num">02</span>
+            <h3 class="step__title">Test before you pitch</h3>
+            <p class="step__text">Every song you rate earns your track an anonymous rating. Get a Readiness score before you spend a credit.</p>
+          </li>
+          <li class="step">
+            <img class="step__icon" src="assets/icons/trending-up.svg" width="32" height="32" alt="">
+            <span class="step__num">03</span>
+            <h3 class="step__title">Real fans</h3>
+            <p class="step__text">Verified curators, audience audited every 90 days. Each placement comes with a report and estimated streams.</p>
+          </li>
+        </ol>
+        <div class="section-foot reveal-up">
+          <a class="btn btn--primary" href="#">Create your free account</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Pitch to the right ears -->
+    <section class="section section--center" aria-labelledby="ears-title">
+      <div class="container">
+        <header class="section-head section-head--center">
+          <span class="badge reveal-badge"><img src="assets/icons/section-badge.svg" alt=""><span>03</span></span>
+          <h2 class="gradient-title reveal-title" id="ears-title">Pitch to the<br>right ears</h2>
+          <p class="section-sub reveal-up">2 180 Verified curators, audience audited every 90 days. Every one shows a public Feedback score.</p>
+        </header>
+        <div class="categories">
+          <a class="cat" href="#">
+            <div class="cat__media">
+              <img class="cat__img" src="assets/img/cat-playlists.png" width="305" height="353" alt="Concert crowd under purple lights">
+              <img class="cat__fade" src="assets/icons/fade.svg" alt="">
+              <img class="cat__badge" src="assets/icons/badge-playlists.svg" width="48" height="48" alt="">
+            </div>
+            <div class="cat__row"><h3 class="cat__title">Spotify playlists</h3><img class="cat__arrow" src="assets/icons/arrow-up-right.svg" width="24" height="24" alt=""></div>
+            <p class="cat__meta">1 240 curators · from 1 credit · 92% useful</p>
+          </a>
+          <a class="cat" href="#">
+            <div class="cat__media">
+              <img class="cat__img" src="assets/img/cat-labels.png" width="305" height="353" alt="Artist raising a hand under cyan laser lights">
+              <img class="cat__fade" src="assets/icons/fade.svg" alt="">
+              <img class="cat__badge" src="assets/icons/badge-labels.svg" width="48" height="48" alt="">
+            </div>
+            <div class="cat__row"><h3 class="cat__title">Labels</h3><img class="cat__arrow" src="assets/icons/arrow-up-right.svg" width="24" height="24" alt=""></div>
+            <p class="cat__meta">310 labels · from 3 credits · 88% useful</p>
+          </a>
+          <a class="cat" href="#">
+            <div class="cat__media">
+              <img class="cat__img" src="assets/img/cat-radios.png" width="305" height="353" alt="Hands on a radio mixing console">
+              <img class="cat__fade" src="assets/icons/fade.svg" alt="">
+              <img class="cat__badge" src="assets/icons/badge-radios.svg" width="48" height="48" alt="">
+            </div>
+            <div class="cat__row"><h3 class="cat__title">Radios</h3><img class="cat__arrow" src="assets/icons/arrow-up-right.svg" width="24" height="24" alt=""></div>
+            <p class="cat__meta">180 radios · from 2 credits · 90% useful</p>
+          </a>
+          <a class="cat" href="#">
+            <div class="cat__media">
+              <img class="cat__img" src="assets/img/cat-blogs.png" width="305" height="353" alt="Hands typing on a laptop">
+              <img class="cat__fade" src="assets/icons/fade.svg" alt="">
+              <img class="cat__badge" src="assets/icons/badge-blogs.svg" width="48" height="48" alt="">
+            </div>
+            <div class="cat__row"><h3 class="cat__title">Blogs &amp; media</h3><img class="cat__arrow" src="assets/icons/arrow-up-right.svg" width="24" height="24" alt=""></div>
+            <p class="cat__meta">450 blogs · from 1 credit · 94% useful</p>
+          </a>
+        </div>
+        <div class="section-foot reveal-up">
+          <a class="btn btn--secondary" href="#">Browse all curators</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 Pre-test -->
+    <section class="section" aria-labelledby="pretest-title">
+      <div class="container split">
+        <div class="split__copy">
+          <span class="badge reveal-badge"><img src="assets/icons/section-badge.svg" alt=""><span>04</span></span>
+          <h2 class="gradient-title reveal-title" id="pretest-title">Test before you pitch</h2>
+          <p class="body-lg reveal-up">Before you spend a single credit, artists from your genre rate your track anonymously. At 20 ratings you get a readiness score out of 100, the 4 criteria and the comment that comes up most. Fix the mix first, then pitch the curators most likely to say yes.</p>
+          <ul class="benefits">
+            <li><img src="assets/icons/check.svg" width="20" height="20" alt="">Free: every song you rate earns your track a rating back</li>
+            <li><img src="assets/icons/check.svg" width="20" height="20" alt="">Anonymous: honest ears, no friends’ bias</li>
+            <li><img src="assets/icons/check.svg" width="20" height="20" alt="">Smarter pitch: your score powers curator matching</li>
+          </ul>
+          <a class="btn btn--secondary reveal-up" href="#">Pre-test a track for free</a>
+        </div>
+
+        <div class="card score-card reveal-card">
+          <div class="score">
+            <div class="score__head">
+              <h3 class="card-title">Track readiness</h3>
+              <span class="label label--cyan">Pre-test</span>
+            </div>
+            <div class="select">
+              <span>Neon Rain · Melodic techno · 124 BPM</span>
+              <img src="assets/icons/chevron-down.svg" width="16" height="16" alt="">
+            </div>
+            <div class="score__main">
+              <span class="label label--success">Ready to pitch</span>
+              <div class="score__value"><span class="score__num" data-count="78">78</span><span class="score__max">/ 100</span></div>
+            </div>
+            <p class="body-sm muted">17 / 20 anonymous ratings received · 3 more for a final score</p>
+            <div class="criteria">
+              <div class="criterion"><span class="criterion__name">Production</span><img class="criterion__bar" src="assets/icons/score-4.svg" width="196" height="10" alt=""><span class="criterion__fill"></span><span class="label">4.3</span></div>
+              <div class="criterion"><span class="criterion__name">Melody</span><img class="criterion__bar" src="assets/icons/score-4.svg" width="196" height="10" alt=""><span class="criterion__fill"></span><span class="label">4.0</span></div>
+              <div class="criterion"><span class="criterion__name">Vocals</span><img class="criterion__bar" src="assets/icons/score-vocals.svg" width="196" height="10" alt=""><span class="criterion__fill"></span><span class="label">3.6</span></div>
+              <div class="criterion"><span class="criterion__name">Originality</span><img class="criterion__bar" src="assets/icons/score-4.svg" width="196" height="10" alt=""><span class="criterion__fill"></span><span class="label">4.4</span></div>
+            </div>
+            <div class="highlight">
+              <p>“The drop at 0:42 really lands, but the intro feels a bit long.”</p>
+              <p class="muted">Most mentioned in 6 of 17 comments</p>
+            </div>
+          </div>
+          <div class="score__foot">
+            <p>Unlocked: 24 curators matched, best at 94%</p>
+            <a class="label label--cyan" href="#">See matches</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 Rate & earn -->
+    <section class="section section--rate" aria-labelledby="rate-title">
+      <div class="container split split--reverse">
+        <div class="card player reveal-card">
+          <div class="player__top">
+            <span class="label muted">Anonymous track #4821</span>
+            <span class="label label--cyan">Track 13 of 20</span>
+          </div>
+          <div class="chips">
+            <span class="chip chip--active">Hip-hop</span>
+            <span class="chip">92 BPM</span>
+            <span class="chip">Dark</span>
+            <span class="chip">Melancholic</span>
+          </div>
+          <div class="player__track">
+            <div class="waveform">
+              <button class="waveform__play" type="button" aria-label="Play track"><img src="assets/icons/play-square.svg" width="56" height="56" alt=""></button>
+              <div class="waveform__bars" data-played="27"
+                   data-heights="8,31,47,40,33,22,10,14,18,20,25,20,18,39,53,45,34,17,23,34,34,18,13,14,16,30,41,33,22,23,36,49,48,29,15,22,17,14,18,15,11,29,37,48,46,23,17,38,38,36,27,11,12,18,21,30,30,10,28,48,48,44,30,11,26,31,19,13"></div>
+            </div>
+            <div class="player__times"><span>1:21</span><span>3:24</span></div>
+          </div>
+          <div class="player__rating">
+            <span class="label">Your rating</span>
+            <span class="rating"><img src="assets/icons/rating-segments.svg" alt="Rated 4 out of 5"></span>
+          </div>
+          <div class="feedback">
+            <p>Great vocal texture and the hook lands at 0:45. The kick feels buried under the bass, try a cleaner low end before pitching.</p>
+            <p class="feedback__count">128 / 80 characters minimum</p>
+          </div>
+          <div class="player__actions">
+            <a class="btn btn--ghost" href="#">Skip track</a>
+            <a class="btn btn--primary" href="#">Submit feedback</a>
+          </div>
+        </div>
+
+        <div class="split__copy">
+          <span class="badge reveal-badge"><img src="assets/icons/section-badge.svg" alt=""><span>05</span></span>
+          <h2 class="gradient-title reveal-title" id="rate-title">Rate &amp;<br>earn</h2>
+          <p class="body-lg reveal-up">Listen to anonymous tracks from other artists, filter by genre, BPM or mood, and leave honest, constructive feedback. Rate 20 songs and we give you 2 free pitch credits.</p>
+          <ul class="benefits">
+            <li><img src="assets/icons/check.svg" width="20" height="20" alt="">100% anonymous: no names, no bias, only the music</li>
+            <li><img src="assets/icons/check.svg" width="20" height="20" alt="">Feedback is moderated, so every rating is useful</li>
+            <li><img src="assets/icons/check.svg" width="20" height="20" alt="">Each rating earns your own track a rating back (Pre-test)</li>
+          </ul>
+          <div class="progress reveal-up">
+            <div class="progress__head"><span class="label">12 / 20 songs rated</span><span class="label label--cyan">+2 credits at 20</span></div>
+            <div class="progress__segs" data-total="20" data-done="12"></div>
+          </div>
+          <a class="btn btn--primary reveal-up" href="#">Start rating songs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Community -->
+    <section class="section section--flush" aria-labelledby="collab-title">
+      <div class="container split">
+        <div class="split__copy">
+          <span class="badge reveal-badge"><img src="assets/icons/section-badge.svg" alt=""><span>06</span></span>
+          <h2 class="gradient-title reveal-title" id="collab-title">Find your next collab</h2>
+          <p class="body-lg reveal-up">Producers looking for a topline, singers looking for a beat, rappers looking for a feature. Chat with 12 000 independent artists filtered by genre, city and skills.</p>
+          <div class="avatars reveal-up">
+            <span class="avatar avatar--cyan">NV</span>
+            <span class="avatar avatar--rose">KO</span>
+            <span class="avatar avatar--slate">LM</span>
+            <span class="avatar avatar--cyan">JB</span>
+            <span class="avatar avatar--rose">AS</span>
+            <span class="avatars__text">+12k artists online this week</span>
+          </div>
+          <a class="btn btn--secondary reveal-up" href="#">Join the community</a>
+        </div>
+
+        <div class="card chat reveal-card">
+          <div class="chat__head">
+            <span class="avatar avatar--rose avatar--sm">KO</span>
+            <div class="chat__who">
+              <h3 class="card-title">Kofi Osei</h3>
+              <p class="body-sm muted">Producer · Afrobeats, R&amp;B · Lyon</p>
+            </div>
+            <img class="chat__online" src="assets/icons/online-dot.svg" width="10" height="10" alt="Online">
+          </div>
+          <hr class="chat__rule">
+          <div class="chat__msgs">
+            <div class="msg"><p class="bubble">Loved your track in the anonymous queue! I'm working on a beat that would fit your voice.</p></div>
+            <div class="msg">
+              <div class="bubble bubble--track">
+                <img class="bubble__cover" src="assets/img/track-cover.jpg" width="48" height="48" alt="">
+                <div class="bubble__info"><p>Midnight Drive (beat)</p><p class="body-sm muted">Kofi Osei · 104 BPM · 2:58</p></div>
+                <button class="bubble__play" type="button" aria-label="Play Midnight Drive"><img src="assets/icons/play.svg" width="16" height="16" alt=""></button>
+              </div>
+            </div>
+            <div class="msg msg--mine"><p class="bubble bubble--mine">Just listened, it's exactly my vibe. Let's do a session next week?</p></div>
+          </div>
+          <form class="composer" onsubmit="return false">
+            <label class="sr-only" for="chat-input">Message</label>
+            <input id="chat-input" type="text" placeholder="Write a message…">
+            <button class="label label--cyan" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section section--center section--flush" aria-labelledby="quotes-title">
+      <div class="container">
+        <header class="section-head section-head--center section-head--tight">
+          <img class="quote-mark" src="assets/icons/quote-big.svg" width="48" height="36" alt="">
+          <h2 class="heading-secondary reveal-title" id="quotes-title">Artists who got heard</h2>
+        </header>
+        <div class="quotes">
+          <figure class="card quote">
+            <p class="label label--cyan">+4 100 monthly listeners</p>
+            <blockquote>“Three Spotify playlists said yes in my first week. The feedback from the rate queue fixed my mix before I even pitched.”</blockquote>
+            <figcaption class="author">
+              <span class="avatar avatar--cyan avatar--flat">NV</span>
+              <span><span class="card-title">Nina Vega</span><span class="body-sm muted">Singer-songwriter · Indie pop</span></span>
+            </figcaption>
+          </figure>
+          <figure class="card quote">
+            <p class="label label--cyan">Signed with Nightshift Records</p>
+            <blockquote>“I signed my first EP with an independent label I found in the catalogue. Their A&amp;R answered in four days.”</blockquote>
+            <figcaption class="author">
+              <span class="avatar avatar--rose avatar--flat">JB</span>
+              <span><span class="card-title">Jay Bamba</span><span class="body-sm muted">Rapper · Drill / Hip-hop</span></span>
+            </figcaption>
+          </figure>
+          <figure class="card quote">
+            <p class="label label--cyan">Played on 2 radios</p>
+            <blockquote>“Radio play on two web radios and a blog interview. Credits are cheap compared with any PR agency.”</blockquote>
+            <figcaption class="author">
+              <span class="avatar avatar--slate avatar--flat">LM</span>
+              <span><span class="card-title">Léa Martin</span><span class="body-sm muted">Producer · Electro / House</span></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final" aria-labelledby="final-title">
+      <div class="final__band">
+        <div class="final__bg" aria-hidden="true">
+          <img class="final__photo" src="assets/img/hero-bg.jpg" alt="">
+          <div class="final__overlay"></div>
+        </div>
+        <h2 class="gradient-title gradient-title--xl" id="final-title">Your next fans<br>are listening</h2>
+        <p class="body-lg final__text">Create your artist profile in 2 minutes. Upload your first track and get 2 bonus credits.</p>
+        <div class="btn-row final__btns">
+          <a class="btn btn--primary" href="#">Start pitching for free</a>
+          <a class="btn btn--secondary" href="#">See credit packs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__main">
+        <div class="footer__brand">
+          <img class="footer__logo" src="assets/icons/wordmark-echo.svg" width="380" height="19" alt="ReachRadar">
+          <p class="footer__pitch">The pitching platform for independent artists. Get heard by curators, labels, radios and new fans.</p>
+          <ul class="socials socials--footer" aria-label="ReachRadar on social media">
+            <li><a href="#" aria-label="SoundCloud"><img src="assets/icons/soundcloud.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="YouTube"><img src="assets/icons/youtube.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="Deezer"><img src="assets/icons/deezer.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="TikTok"><img src="assets/icons/tiktok.svg" width="24" height="24" alt=""></a></li>
+            <li><a href="#" aria-label="Spotify"><img src="assets/icons/spotify.svg" width="24" height="24" alt=""></a></li>
+          </ul>
+          <form class="newsletter" onsubmit="return false">
+            <p class="label">Weekly curator drops</p>
+            <div class="field">
+              <label class="field__label" for="nl-email">Email</label>
+              <input class="field__input" id="nl-email" type="email" placeholder="you@artist.com">
+              <p class="field__helper">New playlists open to submissions, every Monday.</p>
+            </div>
+            <button class="btn btn--secondary" type="submit">Subscribe</button>
+          </form>
+        </div>
+        <nav class="footer__links" aria-label="Footer">
+          <div><p class="label">Product</p><a href="#">Pitch to curators</a><a href="#">Rate &amp; earn</a><a href="#">Credit packs</a><a href="#">Catalogue</a></div>
+          <div><p class="label">Community</p><a href="#">Artist chat</a><a href="#">Find collabs</a><a href="#">Success stories</a><a href="#">Blog</a></div>
+          <div><p class="label">Company</p><a href="#">About</a><a href="#">For curators</a><a href="#">Careers</a><a href="#">Contact</a></div>
+          <div><p class="label">Legal</p><a href="#">Terms of use</a><a href="#">Privacy policy</a><a href="#">GDPR</a><a href="#">Cookies</a><a href="#">Legal notice</a></div>
+        </nav>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 ReachRadar. Made for independent artists.</p>
+        <p class="label label--light">EN&nbsp;&nbsp;/&nbsp;&nbsp;FR</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

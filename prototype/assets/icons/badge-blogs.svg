@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="48" height="48.0001" viewBox="0 0 48 48.0001" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon badge">
+<path id="Rectangle 1" d="M3 0.00012207H48L45 48.0001H0L3 0.00012207Z" fill="#059BC0"/>
+<g id="Icon/newspaper">
+<path id="Vector" d="M16 34H32C32.5304 34 33.0391 33.7893 33.4142 33.4142C33.7893 33.0391 34 32.5304 34 32V16C34 15.4696 33.7893 14.9609 33.4142 14.5858C33.0391 14.2107 32.5304 14 32 14H20C19.4696 14 18.9609 14.2107 18.5858 14.5858C18.2107 14.9609 18 15.4696 18 16V21M16 34C16.5304 34 17.0391 33.7893 17.4142 33.4142C17.7893 33.0391 18 32.5304 18 32V21M16 34C15.4696 34 14.9609 33.7893 14.5858 33.4142C14.2107 33.0391 14 32.5304 14 32V23C14 21.9 14.9 21 16 21H18" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#0D1B2A"/>
+<path id="Vector_2" d="M30 26H22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#0D1B2A"/>
+<path id="Vector_3" d="M27 30H22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#0D1B2A"/>
+<path id="Vector_4" d="M22 18H30V22H22V18Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#0D1B2A"/>
+</g>
+</g>
+</svg>
