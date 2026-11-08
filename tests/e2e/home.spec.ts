@@ -169,3 +169,54 @@ test.describe("without JavaScript", () => {
     ).toBeVisible();
   });
 });
+
+test.describe("before hydration (hard load, motion on)", () => {
+  // Blocking the JS chunks (not the CSS ones) freezes the page as served: AnimGate's
+  // inline script has run, React and GSAP never do.
+  test.beforeEach(async ({ page }) => {
+    await page.route("**/_next/static/chunks/**", (route) =>
+      route.request().resourceType() === "script"
+        ? route.abort()
+        : route.continue(),
+    );
+  });
+
+  test("the gate hides only the hero text, never the photo", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await expect(page.locator("html")).toHaveClass(/anim-pending/);
+    const visibility = (sel: string) =>
+      page.locator(sel).evaluate((el) => getComputedStyle(el).visibility);
+    expect(await visibility('[data-anim="hero-photo"]')).toBe("visible");
+    expect(await visibility('[data-anim="hero-dots"]')).toBe("visible");
+    expect(await visibility('[data-anim="hero-title"]')).toBe("hidden");
+    expect(await visibility("#get-heard")).toBe("visible");
+  });
+
+  test("the 2.5 s failsafe shows the hero even if GSAP never runs", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await expect(page.locator("html")).not.toHaveClass(/anim-pending/, {
+      timeout: 3000,
+    });
+    await expect(
+      page.getByRole("heading", { level: 1, name: "ReachRadar", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Start pitching", exact: true }),
+    ).toBeVisible();
+  });
+});
+
+test("on a hard load with motion the hero photo is painted right away", async ({
+  page,
+}) => {
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  expect(
+    await page
+      .locator('[data-anim="hero-photo"]')
+      .evaluate((el) => getComputedStyle(el).visibility),
+  ).toBe("visible");
+});

@@ -10,10 +10,13 @@ export function Waveform({
   heights,
   played,
   playIcon,
+  label,
 }: {
   heights: readonly number[];
   played: number;
   playIcon: string;
+  /** Accessible name of the play button. */
+  label: string;
 }) {
   const [playing, setPlaying] = useState(false);
   const barsRef = useRef<HTMLDivElement>(null);
@@ -39,7 +42,7 @@ export function Waveform({
       <button
         data-anim="play"
         type="button"
-        aria-label="Play track"
+        aria-label={label}
         aria-pressed={playing}
         onClick={() => setPlaying((p) => !p)}
         className="size-14 flex-none transition-[scale] duration-200 hover:scale-[1.06]"

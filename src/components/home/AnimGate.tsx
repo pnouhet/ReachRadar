@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Hides the `[data-anim]` elements until HomeMotion has set the GSAP start states,
+ * Hides the hero text and header (see `.anim-pending` in globals.css) until HomeMotion has set the GSAP start states,
  * so the hero does not flash its final layout first. Runs while the HTML is parsed;
  * skipped with reduced motion; a 2.5 s failsafe shows everything even if GSAP never runs.
  */

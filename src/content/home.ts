@@ -196,6 +196,7 @@ export const HOME = {
       position: "Track 13 of 20",
       chips: ["Hip-hop", "92 BPM", "Dark", "Melancholic"],
       playIcon: "/home/play-square.svg",
+      playLabel: "Play track",
       elapsed: "1:21",
       duration: "3:24",
       ratingLabel: "Your rating",
@@ -238,6 +239,7 @@ export const HOME = {
       name: "Kofi Osei",
       role: "Producer · Afrobeats, R&B · Lyon",
       onlineDot: "/home/online-dot.svg",
+      onlineLabel: "Online",
       first:
         "Loved your track in the anonymous queue! I'm working on a beat that would fit your voice.",
       track: {

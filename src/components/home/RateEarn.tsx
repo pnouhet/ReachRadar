@@ -44,6 +44,7 @@ function Player() {
           heights={rateEarn.waveform}
           played={rateEarn.played}
           playIcon={player.playIcon}
+          label={player.playLabel}
         />
         <div className="flex justify-between text-body-sm text-muted">
           <span>{player.elapsed}</span>

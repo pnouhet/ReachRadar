@@ -38,7 +38,7 @@ function ChatCard() {
           src={chat.onlineDot}
           width={10}
           height={10}
-          alt="Online"
+          alt={chat.onlineLabel}
           unoptimized
           className="animate-pulse motion-reduce:animate-none"
         />

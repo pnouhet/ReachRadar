@@ -43,3 +43,10 @@ describe("HOME content", () => {
     expect(HOME.testimonialsHead.id).toBe("stories");
   });
 });
+
+describe("HOME labels", () => {
+  it("holds the accessible names used by the illustration cards", () => {
+    expect(HOME.rateEarn.player.playLabel).toBe("Play track");
+    expect(HOME.community.chat.onlineLabel).toBe("Online");
+  });
+});

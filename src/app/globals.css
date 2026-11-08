@@ -195,7 +195,9 @@
     border: var(--slant-border-width) solid var(--slant-border);
     border-radius: 2px;
     transform: skewX(-12deg);
-    transition: background-color 0.2s, border-color 0.2s;
+    transition:
+      background-color 0.2s,
+      border-color 0.2s;
   }
 }
 
@@ -223,7 +225,18 @@
   }
 }
 
-/* Set by AnimGate until GSAP has applied its start states (never longer than 2.5 s). */
-.anim-pending [data-anim] {
+/* Set by AnimGate until GSAP has applied its start states (never longer than 2.5 s).
+   Only the prototype's gated elements hide: header, hero title, hero CTA, hero bar.
+   The photo stays painted, already at the intro's start zoom. */
+.anim-pending
+  :is(
+    [data-anim="nav"],
+    [data-anim="hero-title"],
+    [data-anim="hero-cta"],
+    [data-anim="hero-bar"]
+  ) {
   visibility: hidden;
+}
+.anim-pending [data-anim="hero-photo"] {
+  transform: scale(1.18);
 }

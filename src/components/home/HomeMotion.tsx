@@ -71,9 +71,11 @@ function buildMotion(root: El, animateNav: boolean): () => void {
   const heroBar = one("hero-bar");
   const intro = gsap.timeline({ defaults: { ease: "expo.out" } });
   intro
-    .from(
+    // fromTo: while anim-pending, CSS holds the photo at 1.18, which from() would read as its end.
+    .fromTo(
       one("hero-photo"),
-      { scale: 1.18, duration: 2.6, ease: "power2.out" },
+      { scale: 1.18 },
+      { scale: 1, duration: 2.6, ease: "power2.out" },
       0,
     )
     .from(one("hero-dots"), { autoAlpha: 0, duration: 1.6 }, 0.2);
