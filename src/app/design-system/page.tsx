@@ -1,5 +1,17 @@
 import { notFound } from "next/navigation";
+import { Plus, User } from "lucide-react";
+import { Avatar } from "@/components/ui/Avatar";
+import { Button } from "@/components/ui/Button";
+import { Checkbox } from "@/components/ui/Checkbox";
+import { Chip } from "@/components/ui/Chip";
+import { CreditPill } from "@/components/ui/CreditPill";
+import { Input } from "@/components/ui/Input";
+import { SectionBadge } from "@/components/ui/SectionBadge";
+import { Stat } from "@/components/ui/Stat";
+import { Tab } from "@/components/ui/Tab";
+import { Textarea } from "@/components/ui/Textarea";
 import { Wordmark } from "@/components/ui/Wordmark";
+import { DemoControls } from "./DemoControls";
 
 export const metadata = { title: "Design system" };
 
@@ -59,15 +71,41 @@ export default function DesignSystemPage() {
         ))}
       </section>
 
-      <section id="components" className="flex flex-col gap-6">
-        <h2 className="text-heading-card">Slant</h2>
-        <div className="flex flex-wrap gap-6">
-          <span className="slant inline-flex h-12 items-center px-[34px] text-button [--slant-bg:var(--color-rose)] [--slant-border:var(--color-rose)]">
-            Start pitching
-          </span>
-          <span className="slant inline-flex h-12 items-center px-[34px] text-button [--slant-border:#fff]">
-            A much longer secondary label stays at -12°
-          </span>
+      <section id="components" className="flex flex-col gap-10">
+        <h2 className="text-heading-card">Components</h2>
+        <div className="flex flex-wrap items-center gap-6">
+          <Button variant="primary">Get started</Button>
+          <Button variant="primary" icon={User}>Get started</Button>
+          <Button variant="secondary">Get started</Button>
+          <Button variant="ghost">Get started</Button>
+          <Button variant="secondary" icon={Plus}>Get started</Button>
+          <Button variant="secondary">A much longer secondary label stays at -12°</Button>
+          <Button variant="primary" loading>Saving</Button>
+        </div>
+        <div className="flex flex-wrap items-center gap-6">
+          <Chip>Hip-hop</Chip>
+          <Chip active>Hip-hop</Chip>
+          <CreditPill credits={24} />
+          <SectionBadge>01</SectionBadge>
+          <Stat value="+800" label="Submitted songs" />
+          <Avatar name="Ilan Mercier" size={44} />
+          <Avatar name="Ilan Mercier" size={80} />
+        </div>
+        <DemoControls />
+        <div className="flex gap-2 border-b border-border-subtle">
+          <Tab active>Tab label</Tab>
+          <Tab active={false}>Tab label</Tab>
+          <Tab active={false} count={8}>Inbox</Tab>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Input label="Email" placeholder="you@artist.com" helper="We'll never share it" />
+          <Input label="Password" type="password" defaultValue="secret123" trailing={<button type="button" className="text-label-strong text-cyan">Show</button>} />
+          <Input label="Email" defaultValue="you@artist.com" error="We'll never share it" />
+        </div>
+        <Textarea label="Bio" maxLength={300} showCount defaultValue="Producer & DJ from Lyon." />
+        <div className="flex flex-col gap-3">
+          <Checkbox label="I accept the Terms of use and Privacy policy" />
+          <Checkbox label="I accept the Terms of use and Privacy policy" defaultChecked />
         </div>
       </section>
     </main>
