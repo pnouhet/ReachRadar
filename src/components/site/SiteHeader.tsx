@@ -47,7 +47,7 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
           !solid &&
             (scrolled
               ? "bg-midnight/80 py-4 backdrop-blur-md"
-              : "py-5 lg:py-[35px]"),
+              : "py-5 lg:py-8"),
         )}
       >
         <div className="mx-auto grid max-w-[1920px] grid-cols-[auto_1fr_auto] items-center gap-4 px-6 lg:grid-cols-[160px_1fr_160px] lg:px-10 xl:px-[60px]">
