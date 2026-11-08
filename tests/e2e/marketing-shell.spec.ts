@@ -85,3 +85,17 @@ test("the menu fills the viewport even after the header has blurred on scroll", 
   const innerHeight = await page.evaluate(() => window.innerHeight);
   expect(box!.height).toBeGreaterThan(innerHeight - 2);
 });
+
+test("the open menu traps keyboard focus", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+  const dialog = page.getByRole("dialog", { name: "Menu" });
+  await expect(dialog).toBeVisible();
+  for (let i = 0; i < 40; i++) {
+    await page.keyboard.press("Tab");
+    const inside = await page.evaluate(
+      () => !!document.activeElement?.closest("dialog"),
+    );
+    expect(inside).toBe(true);
+  }
+});

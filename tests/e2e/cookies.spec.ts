@@ -92,3 +92,20 @@ test("saving on the cookie page hides the banner", async ({
     (await context.cookies()).find((c) => c.name === "rr_consent")?.value,
   ).toBe("v1.1.0");
 });
+
+test("on a phone the banner never covers the Log in button", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/login");
+  const banner = page.getByRole("region", { name: BANNER });
+  await expect(banner).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  const button = page.getByRole("button", { name: "Log in", exact: true });
+  await button.scrollIntoViewIfNeeded();
+  const b = await button.boundingBox();
+  const r = await banner.boundingBox();
+  expect(b!.y + b!.height).toBeLessThanOrEqual(r!.y + 1);
+  await button.click({ timeout: 3000 });
+  await expect(page).toHaveURL(/\/login/);
+});

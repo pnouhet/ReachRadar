@@ -39,7 +39,7 @@ function ChatCard() {
           height={10}
           alt={chat.onlineLabel}
           unoptimized
-          className="animate-pulse motion-reduce:animate-none"
+          className="animate-blink motion-reduce:animate-none"
         />
       </div>
       <div data-anim="chat-rule" className="h-px bg-border-subtle" />

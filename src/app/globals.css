@@ -151,6 +151,7 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-padding-bottom: var(--consent-h, 0px);
   }
   body {
     background: var(--color-midnight);
@@ -160,6 +161,7 @@
     line-height: 24px;
     -webkit-font-smoothing: antialiased;
     min-height: 100dvh;
+    padding-bottom: var(--consent-h, 0px);
   }
   :focus-visible {
     outline: 2px solid var(--color-cyan);
@@ -204,7 +206,7 @@
 /* ---------- Home motion (prototype port) ---------- */
 @theme {
   --animate-nudge: nudge 1.8s ease-in-out infinite;
-  --animate-pulse: pulse 2s ease-in-out infinite;
+  --animate-blink: blink 2s ease-in-out infinite;
   @keyframes nudge {
     0%,
     100% {
@@ -214,7 +216,7 @@
       transform: translateY(5px);
     }
   }
-  @keyframes pulse {
+  @keyframes blink {
     0%,
     100% {
       opacity: 1;

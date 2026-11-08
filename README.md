@@ -81,7 +81,7 @@ Visible to everyone, no login needed:
 - `/pricing` — credit packs, how to earn credits, FAQ
 - `/legal/<slug>` — `privacy`, `gdpr`, `cookies`, `terms`, `legal-notice`
 
-All page copy lives in `src/content/*` (`home.ts`, `pricing.ts`, `legal/`), not in the components.
+Page copy for home, pricing and the legal documents lives in `src/content/*` (`home.ts`, `pricing.ts`, `legal/`); shell UI labels (header, footer, cookie banner) live in their components.
 The cookie banner stores the visitor's choice in the `rr_consent` cookie (`v1.<analytics>.<marketing>`, for example `v1.0.0` when everything optional is rejected).
 
 ## Admin accounts

@@ -21,6 +21,7 @@ export function serializeConsent(c: Consent): string {
 
 /** Client only: stores the choice and tells the page (banner) about it. */
 export function writeConsent(c: Consent): void {
-  document.cookie = `${CONSENT_COOKIE}=${serializeConsent(c)}; max-age=${CONSENT_MAX_AGE}; path=/; SameSite=Lax`;
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+  document.cookie = `${CONSENT_COOKIE}=${serializeConsent(c)}; max-age=${CONSENT_MAX_AGE}; path=/; SameSite=Lax${secure}`;
   window.dispatchEvent(new CustomEvent<Consent>(CONSENT_EVENT, { detail: c }));
 }
