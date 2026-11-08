@@ -36,45 +36,69 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
       : { label: "Sign Up", href: "/signup" };
 
   return (
-    <header
-      className={cn(
-        "z-50 transition-[background-color,padding,backdrop-filter] duration-300 motion-reduce:transition-none",
-        solid ? "sticky top-0 border-b border-border-subtle bg-midnight py-5" : "fixed inset-x-0 top-0",
-        !solid && (scrolled ? "bg-midnight/80 py-4 backdrop-blur-md" : "py-5 lg:py-8"),
-      )}
-    >
-      <div className="mx-auto grid max-w-[1800px] grid-cols-[auto_1fr_auto] items-center gap-4 px-6 lg:grid-cols-[160px_1fr_160px] lg:px-10 min-[1280px]:px-[60px]">
-        <div className="flex gap-2.5">
-          <button
-            ref={menuButton}
-            type="button"
-            aria-label="Open menu"
-            aria-haspopup="dialog"
-            onClick={() => setMenuOpen(true)}
-            className="size-10 focus-visible:outline-2 focus-visible:outline-cyan"
-          >
-            <Image src="/home/menu.svg" width={40} height={40} alt="" unoptimized />
-          </button>
+    <>
+      <header
+        className={cn(
+          "z-50 transition-[background-color,padding,backdrop-filter] duration-300 motion-reduce:transition-none",
+          solid
+            ? "sticky top-0 border-b border-border-subtle bg-midnight py-5"
+            : "fixed inset-x-0 top-0",
+          !solid &&
+            (scrolled
+              ? "bg-midnight/80 py-4 backdrop-blur-md"
+              : "py-5 lg:py-8"),
+        )}
+      >
+        <div className="mx-auto grid max-w-[1920px] grid-cols-[auto_1fr_auto] items-center gap-4 px-6 lg:grid-cols-[160px_1fr_160px] lg:px-10 xl:px-[60px]">
+          <div className="flex gap-2.5">
+            <button
+              ref={menuButton}
+              type="button"
+              aria-label="Open menu"
+              aria-haspopup="dialog"
+              onClick={() => setMenuOpen(true)}
+              className="size-10 focus-visible:outline-2 focus-visible:outline-cyan"
+            >
+              <Image
+                src="/home/menu.svg"
+                width={40}
+                height={40}
+                alt=""
+                unoptimized
+              />
+            </button>
+            <Link
+              href="/catalogue"
+              aria-label="Search"
+              className="size-10 focus-visible:outline-2 focus-visible:outline-cyan max-[560px]:hidden"
+            >
+              <Image
+                src="/home/search.svg"
+                width={40}
+                height={40}
+                alt=""
+                unoptimized
+              />
+            </Link>
+          </div>
           <Link
-            href="/catalogue"
-            aria-label="Search"
-            className="size-10 focus-visible:outline-2 focus-visible:outline-cyan max-[560px]:hidden"
+            href="/"
+            aria-label="ReachRadar home"
+            className="w-[min(400px,100%)] justify-self-center"
           >
-            <Image src="/home/search.svg" width={40} height={40} alt="" unoptimized />
+            <Wordmark width={400} className="h-auto w-full" />
+          </Link>
+          <Link
+            href={cta.href}
+            className="slant inline-flex h-[42px] min-w-[112px] items-center justify-center gap-2.5 justify-self-end px-5 font-display text-[16px] leading-5 font-medium whitespace-nowrap text-white [--slant-bg:var(--color-rose)] [--slant-border:var(--color-rose)] [--slant-h:42px] hover:brightness-110 sm:min-w-[130px] lg:min-w-[160px]"
+          >
+            {!signedIn && <User size={20} strokeWidth={1.5} aria-hidden />}
+            <span>{cta.label}</span>
           </Link>
         </div>
-        <Link href="/" aria-label="ReachRadar home" className="w-[min(400px,100%)] justify-self-center">
-          <Wordmark width={400} className="h-auto w-full" />
-        </Link>
-        <Link
-          href={cta.href}
-          className="slant inline-flex h-[42px] min-w-[112px] items-center justify-center gap-2.5 justify-self-end px-5 text-button whitespace-nowrap text-white [--slant-bg:var(--color-rose)] [--slant-border:var(--color-rose)] [--slant-h:42px] hover:brightness-110 sm:min-w-[130px] lg:min-w-[160px]"
-        >
-          {!signedIn && <User size={20} strokeWidth={1.5} aria-hidden />}
-          <span>{cta.label}</span>
-        </Link>
-      </div>
+      </header>
+      {/* Outside <header>: its backdrop-filter would otherwise become the containing block of the fixed menu. */}
       <SiteMenu open={menuOpen} onClose={closeMenu} signedIn={signedIn} />
-    </header>
+    </>
   );
 }

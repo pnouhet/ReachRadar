@@ -13,13 +13,22 @@ describe("SITE_LINKS", () => {
   const flat = SITE_LINKS.flatMap((c) => c.links);
 
   it("only links to internal paths", () => {
-    for (const l of flat) if (l.href !== null) expect(l.href.startsWith("/")).toBe(true);
+    for (const l of flat)
+      if (l.href !== null) expect(l.href.startsWith("/")).toBe(true);
   });
 
   it("lists the legal documents in the Legal column", () => {
     const legal = SITE_LINKS.find((c) => c.title === "Legal")!;
-    expect(legal.links.map((l) => l.href)).toEqual(LEGAL_DOCS.map((d) => "/legal/" + d.slug));
-    expect(LEGAL_DOCS.map((d) => d.label)).toEqual(["Privacy policy", "GDPR", "Cookies", "Terms of use", "Legal notice"]);
+    expect(legal.links.map((l) => l.href)).toEqual(
+      LEGAL_DOCS.map((d) => "/legal/" + d.slug),
+    );
+    expect(LEGAL_DOCS.map((d) => d.label)).toEqual([
+      "Privacy policy",
+      "GDPR",
+      "Cookies",
+      "Terms of use",
+      "Legal notice",
+    ]);
   });
 
   it("maps every footer link", () => {

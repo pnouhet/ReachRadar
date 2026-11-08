@@ -6,7 +6,9 @@ export default function Home() {
         <span className="block">Reach radar</span>
         <span className="block text-outline">Reach radar</span>
       </h1>
-      <p className="max-w-xl text-body-lg text-soft-white">Pitch smarter. Pay only for real feedback. Grow real fans.</p>
+      <p className="max-w-xl text-body-lg text-soft-white">
+        Pitch smarter. Pay only for real feedback. Grow real fans.
+      </p>
     </main>
   );
 }

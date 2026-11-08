@@ -26,7 +26,11 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col items-start gap-4 pt-4">
+    <form
+      onSubmit={onSubmit}
+      noValidate
+      className="flex flex-col items-start gap-4 pt-3"
+    >
       <p className="text-label-strong text-white">Weekly curator drops</p>
       <Input
         label="Email"
@@ -40,9 +44,11 @@ export function NewsletterForm() {
       <Button type="submit" variant="secondary">
         Subscribe
       </Button>
-      <p role="status" className="text-body-sm text-cyan">
-        {done ? "Thanks! Curator drops are coming soon." : ""}
-      </p>
+      {done && (
+        <p role="status" className="text-body-sm text-cyan">
+          Thanks! Curator drops are coming soon.
+        </p>
+      )}
     </form>
   );
 }

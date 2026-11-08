@@ -1,6 +1,7 @@
 import type { Role } from "@/lib/nav";
 
-export type LegalSlug = "privacy" | "gdpr" | "cookies" | "terms" | "legal-notice";
+export type LegalSlug =
+  "privacy" | "gdpr" | "cookies" | "terms" | "legal-notice";
 
 /** Legal documents in display order. */
 export const LEGAL_DOCS: { slug: LegalSlug; label: string }[] = [
@@ -14,7 +15,10 @@ export const LEGAL_DOCS: { slug: LegalSlug; label: string }[] = [
 /** `href: null` means the page is not built yet: rendered as muted text ("Coming soon"). */
 export type SiteLink = { label: string; href: string | null };
 
-export const SITE_LINKS: { title: "Product" | "Community" | "Company" | "Legal"; links: SiteLink[] }[] = [
+export const SITE_LINKS: {
+  title: "Product" | "Community" | "Company" | "Legal";
+  links: SiteLink[];
+}[] = [
   {
     title: "Product",
     links: [
@@ -42,7 +46,13 @@ export const SITE_LINKS: { title: "Product" | "Community" | "Company" | "Legal";
       { label: "Contact", href: "/legal/legal-notice#contact" },
     ],
   },
-  { title: "Legal", links: LEGAL_DOCS.map((d) => ({ label: d.label, href: `/legal/${d.slug}` })) },
+  {
+    title: "Legal",
+    links: LEGAL_DOCS.map((d) => ({
+      label: d.label,
+      href: `/legal/${d.slug}`,
+    })),
+  },
 ];
 
 /** Where a "Buy credits" call to action leads for this viewer. */

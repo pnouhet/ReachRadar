@@ -43,7 +43,12 @@ export function SiteMenu({ open, onClose, signedIn }: SiteMenuProps) {
       ];
 
   return (
-    <div role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-midnight">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu"
+      className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-midnight"
+    >
       <div className="flex items-center justify-between px-6 py-5 lg:px-10 lg:py-8">
         <Wordmark width={220} className="h-auto w-[160px] sm:w-[220px]" />
         <button
@@ -56,7 +61,10 @@ export function SiteMenu({ open, onClose, signedIn }: SiteMenuProps) {
           <X size={28} strokeWidth={1.5} aria-hidden />
         </button>
       </div>
-      <nav aria-label="Site" className="flex flex-1 flex-col gap-12 px-6 pt-8 pb-16 lg:flex-row lg:gap-32 lg:px-10">
+      <nav
+        aria-label="Site"
+        className="flex flex-1 flex-col gap-12 px-6 pt-8 pb-16 lg:flex-row lg:gap-32 lg:px-10"
+      >
         <ul className="flex flex-col gap-4">
           {[...PRIMARY, ...account].map((l) => (
             <li key={l.href}>
