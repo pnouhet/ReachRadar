@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${syne.variable} ${inter.variable}`}>
       <body>
         <OutlineFilter />
         {children}
