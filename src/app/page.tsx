@@ -5,9 +5,9 @@ import { Wordmark } from "@/components/ui/Wordmark";
 export default function Home() {
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="flex items-center justify-between gap-6 px-6 py-8 sm:px-[60px]">
-        <Wordmark width={260} className="h-[13px] w-auto" />
-        <nav className="flex items-center gap-4">
+      <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 py-8 sm:px-[60px]">
+        <Wordmark width={260} className="h-auto w-[150px] sm:w-[260px]" />
+        <nav className="flex flex-wrap items-center gap-2 sm:gap-4">
           <Button variant="ghost" href="/login">
             Log in
           </Button>

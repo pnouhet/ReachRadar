@@ -43,7 +43,7 @@ export function RoleChooser() {
               aria-checked={selected}
               onClick={() => setRole(r)}
               className={cn(
-                "flex w-full items-start gap-5 rounded-[2px] p-6 text-left transition-colors",
+                "flex w-full items-start gap-4 rounded-[2px] p-4 text-left transition-colors sm:gap-5 sm:p-6",
                 selected ? "border-[1.5px] border-cyan bg-surface-2" : "border border-border-subtle bg-surface-1 hover:bg-surface-2",
               )}
             >
@@ -59,7 +59,7 @@ export function RoleChooser() {
                 <Icon size={22} strokeWidth={1.5} />
               </span>
               <span className="flex flex-1 flex-col gap-2">
-                <span className="text-heading-h3 uppercase">{title}</span>
+                <span className="text-heading-card uppercase sm:text-heading-h3">{title}</span>
                 <span className="text-body-md text-soft-white">{body}</span>
                 <span className="text-body-sm text-cyan">{perks}</span>
               </span>

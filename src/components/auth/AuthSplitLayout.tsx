@@ -31,7 +31,7 @@ export function AuthSplitLayout({ panel, back, switchTo, children }: AuthSplitLa
   return (
     <div className="grid min-h-dvh bg-midnight lg:grid-cols-2">
       <AuthVisualPanel {...panel} />
-      <main className="flex min-h-dvh flex-col items-center justify-between gap-12 px-6 pt-8 pb-10 sm:px-12 lg:pt-12 xl:px-24">
+      <main className="flex min-h-dvh min-w-0 flex-col items-center justify-between gap-12 px-6 pt-8 pb-10 sm:px-12 lg:pt-12 xl:px-24">
         <div className="flex w-full flex-col gap-6">
           <Link href="/" className="w-fit lg:hidden" aria-label="ReachRadar home">
             <Wordmark width={240} className="h-3 w-auto" />

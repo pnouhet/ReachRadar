@@ -32,10 +32,10 @@ export function AppTopBar({ user, menuOpen, onToggleMenu }: AppTopBarProps) {
         <Menu size={22} strokeWidth={1.5} aria-hidden />
       </button>
       <Link href="/dashboard" aria-label="ReachRadar dashboard" className="shrink-0">
-        <Wordmark width={215} className="h-[11px] w-auto sm:h-[20px] sm:w-[215px]" />
+        <Wordmark width={215} className="h-auto w-[130px] sm:w-[215px]" />
       </Link>
 
-      <label className="hidden h-11 w-full max-w-[520px] items-center gap-3 rounded-[2px] border border-border-subtle bg-surface-1 pr-2.5 pl-4 md:flex">
+      <label className="hidden h-11 w-full max-w-[520px] min-w-0 items-center gap-3 rounded-[2px] border border-border-subtle bg-surface-1 pr-2.5 pl-4 xl:flex">
         <Search size={18} strokeWidth={1.5} className="text-slate" aria-hidden />
         <input
           type="search"
@@ -49,14 +49,14 @@ export function AppTopBar({ user, menuOpen, onToggleMenu }: AppTopBarProps) {
       <div className="flex-1" />
 
       {user.role === "artist" ? (
-        <div className="hidden items-center gap-3 sm:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <CreditPill credits={artistMock.credits.total} />
           <Link href="/credits" className="text-label-strong whitespace-nowrap text-white hover:text-cyan">
             Buy credits
           </Link>
         </div>
       ) : (
-        <div className="hidden items-center gap-3 sm:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <span className="slant inline-flex h-[34px] items-center gap-2 px-[30px] text-label-strong text-cyan [--slant-h:34px] [--slant-border:var(--color-cyan)]">
             <Wallet size={16} strokeWidth={1.5} aria-hidden />€{curatorMock.earnings.availableEur.toFixed(2)}
           </span>
