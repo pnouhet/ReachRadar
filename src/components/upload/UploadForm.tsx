@@ -136,12 +136,14 @@ export function UploadForm({ userId, artistName, initial, published }: UploadFor
       // A newer pick took over: it owns the draft and the panel state now.
       if (abort.current !== controller) return;
       abort.current = null;
-      if (draftCreatedHere) {
-        // Don't leave an empty "Untitled draft" behind on My profile.
-        setTrackId(null);
-        void deleteTrack(id);
-      }
       setAudio(previous);
+      if (draftCreatedHere) {
+        // Don't leave an empty "Untitled draft" behind on My profile; wait so the message only
+        // shows once it is really gone.
+        setTrackId(null);
+        await deleteTrack(id);
+        if (abort.current) return; // the artist picked another file meanwhile
+      }
       setAudioError(controller.signal.aborted ? "Upload cancelled." : e instanceof Error && e.message ? e.message : UPLOAD_FAILED);
     }
   }
