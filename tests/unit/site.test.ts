@@ -17,10 +17,17 @@ describe("SITE_LINKS", () => {
       if (l.href !== null) expect(l.href.startsWith("/")).toBe(true);
   });
 
-  it("lists the legal documents in the Legal column", () => {
-    const legal = SITE_LINKS.find((c) => c.title === "Legal")!;
-    expect(legal.links.map((l) => l.href)).toEqual(
-      LEGAL_DOCS.map((d) => "/legal/" + d.slug),
+  it("lists the legal documents in the Figma order", () => {
+    const hrefs = SITE_LINKS.find((c) => c.title === "Legal")!.links.map(
+      (l) => l.href,
+    );
+    expect(hrefs).toEqual(
+      ["terms", "privacy", "gdpr", "cookies", "legal-notice"].map(
+        (s) => "/legal/" + s,
+      ),
+    );
+    expect([...hrefs].sort()).toEqual(
+      LEGAL_DOCS.map((d) => "/legal/" + d.slug).sort(),
     );
     expect(LEGAL_DOCS.map((d) => d.label)).toEqual([
       "Privacy policy",

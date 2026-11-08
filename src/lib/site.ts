@@ -48,9 +48,12 @@ export const SITE_LINKS: {
   },
   {
     title: "Legal",
-    links: LEGAL_DOCS.map((d) => ({
-      label: d.label,
-      href: `/legal/${d.slug}`,
+    // Figma order (Terms first), unlike LEGAL_DOCS which orders the legal-page tabs.
+    links: (
+      ["terms", "privacy", "gdpr", "cookies", "legal-notice"] as const
+    ).map((slug) => ({
+      label: LEGAL_DOCS.find((d) => d.slug === slug)!.label,
+      href: `/legal/${slug}`,
     })),
   },
 ];
