@@ -6,7 +6,7 @@ Next.js (App Router, TypeScript, Tailwind CSS v4) + Supabase (Auth, Postgres, St
 The design source is the Figma file `ReachRadar` (page **Screens**); product rules live in `DESIGN.md`.
 The original static home prototype is kept in `prototype/` for reference.
 
-## What works today (plan 1)
+## What works today
 
 - Sign up as an **artist** or a **curator** (email + password), email confirmation, log in, password reset.
 - Role-aware app shell: every sidebar page exists; pages not built yet show "Coming soon".
