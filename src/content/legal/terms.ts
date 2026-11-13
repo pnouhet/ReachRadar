@@ -16,7 +16,7 @@ export const terms: LegalDoc = {
       blocks: [
         {
           kind: "p",
-          text: "You must be 16 or older and give accurate information. One person, one account. You are responsible for what happens on your account.",
+          text: "You must be 18 or older and give accurate information. One person, one account. You are responsible for what happens on your account.",
         },
       ],
     },
