@@ -54,7 +54,8 @@ export function AppShell({ user, children }: AppShellProps) {
         <aside
           id="app-sidebar"
           className={cn(
-            "fixed top-(--shell-top) bottom-0 left-0 z-20 w-sidebar overflow-y-auto border-r border-border-subtle bg-surface-1 transition-transform lg:sticky lg:h-[calc(100dvh-var(--shell-top))] lg:translate-x-0",
+            // --player-h: the audio player bar, when a track is loaded, takes the bottom of the screen.
+            "fixed top-(--shell-top) bottom-[var(--player-h,0px)] left-0 z-20 w-sidebar overflow-y-auto border-r border-border-subtle bg-surface-1 transition-transform lg:sticky lg:h-[calc(100dvh-var(--shell-top)-var(--player-h,0px))] lg:translate-x-0",
             open ? "translate-x-0" : "-translate-x-full",
           )}
         >

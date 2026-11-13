@@ -1,5 +1,6 @@
 import { Upload } from "lucide-react";
 import Link from "next/link";
+import { TrackQueue } from "@/components/player/PlayerProvider";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { PlayButton } from "@/components/tracks/PlayButton";
 import { TrackCard } from "@/components/tracks/TrackCard";
@@ -20,6 +21,10 @@ export default async function MyProfilePage() {
   const isArtist = profile.role === "artist";
   const tracks = isArtist ? await getMyTracks(profile.id) : [];
   const memberSince = new Date(profile.createdAt).getUTCFullYear().toString();
+  // What the player's Previous / Next walk through: every track that has audio, in list order.
+  const playable = tracks
+    .filter((t) => t.audioPath)
+    .map((t) => ({ id: t.id, title: t.title ?? "draft", artist: profile.displayName, coverUrl: t.coverUrl }));
 
   return (
     <div className="flex flex-col gap-10">
@@ -58,6 +63,7 @@ export default async function MyProfilePage() {
                 Upload a track
               </Button>
             </div>
+            <TrackQueue tracks={playable}>
             <ul className="grid gap-x-5 gap-y-8 sm:grid-cols-2 2xl:grid-cols-3">
               {tracks.map((t) => (
                 <li key={t.id} className="min-w-0">
@@ -71,7 +77,11 @@ export default async function MyProfilePage() {
                     status={t.status === "draft" ? "Draft" : releaseTag(t.releaseStatus, t.releaseDate)}
                     rating={null}
                     stats={t.status === "draft" ? "Finish it to publish" : "Not tested yet"}
-                    play={t.audioPath ? <PlayButton trackId={t.id} title={t.title ?? "draft"} /> : undefined}
+                    play={
+                      t.audioPath ? (
+                        <PlayButton trackId={t.id} title={t.title ?? "draft"} artist={profile.displayName} coverUrl={t.coverUrl} />
+                      ) : undefined
+                    }
                   />
                   {t.status === "draft" && (
                     <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
@@ -104,6 +114,7 @@ export default async function MyProfilePage() {
                 </Link>
               </li>
             </ul>
+            </TrackQueue>
           </section>
 
           <aside className="flex w-full flex-col gap-5 xl:w-[400px] xl:shrink-0">

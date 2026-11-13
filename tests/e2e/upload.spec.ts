@@ -29,9 +29,9 @@ test("a new artist's profile shows only the upload card, with no errors", async 
 test("an artist uploads, publishes and plays a track", async ({ page }) => {
   await logIn(page, artist, "/login?next=/profile/upload");
 
-  await page.getByTestId("audio-input").setInputFiles({ name: "afterlight.wav", mimeType: "audio/wav", buffer: Buffer.from(makeWav(3)) });
+  await page.getByTestId("audio-input").setInputFiles({ name: "afterlight.wav", mimeType: "audio/wav", buffer: Buffer.from(makeWav(10)) });
   await expect(page.getByText("Uploaded", { exact: true })).toBeVisible({ timeout: 30_000 });
-  await expect(page.getByText(/WAV · 0\.\d MB · 0:03/)).toBeVisible();
+  await expect(page.getByText(/WAV · 0\.\d MB · 0:10/)).toBeVisible();
 
   const cover = await makePng(page, 1000, 1000, "#e54166");
   await page.getByTestId("artwork-input").setInputFiles({ name: "cover.png", mimeType: "image/png", buffer: cover });
@@ -50,10 +50,59 @@ test("an artist uploads, publishes and plays a track", async ({ page }) => {
   await page.goto("/profile");
   await expect(page.getByRole("tab", { name: "Tracks (1)" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Afterlight" })).toBeVisible();
-  await expect(page.getByText("Melodic techno · 124 BPM · 0:03")).toBeVisible();
+  await expect(page.getByText("Melodic techno · 124 BPM · 0:10")).toBeVisible();
 
   await page.getByRole("button", { name: "Play Afterlight" }).click();
   await expect(page.getByRole("button", { name: "Pause Afterlight" })).toBeVisible({ timeout: 10_000 });
+});
+
+test("the player bar keeps playing from page to page, and closes", async ({ page }) => {
+  await logIn(page, artist, "/login?next=/profile");
+  await expect(page.getByRole("region", { name: "Audio player" })).toBeHidden();
+
+  await page.getByRole("button", { name: "Play Afterlight" }).click();
+  const bar = page.getByRole("region", { name: "Audio player" });
+  const seek = bar.getByRole("slider", { name: "Seek" });
+  const position = async () => Number(await seek.inputValue());
+  await expect(bar.getByText("Afterlight", { exact: true })).toBeVisible();
+  await expect(bar.getByText("Upload Tester")).toBeVisible();
+  await expect(bar.getByRole("button", { name: "Pause", exact: true })).toBeVisible({ timeout: 10_000 });
+
+  // The bar is pinned to the bottom edge and the page pads itself so nothing hides behind it.
+  const box = (await bar.boundingBox())!;
+  const viewport = page.viewportSize()!;
+  expect(Math.round(box.y + box.height)).toBe(viewport.height);
+  expect(Math.round(box.width)).toBe(viewport.width);
+  expect(await page.evaluate(() => parseFloat(getComputedStyle(document.body).paddingBottom))).toBeGreaterThanOrEqual(72);
+
+  // Client navigation through the sidebar: same audio, still running.
+  await page.getByRole("link", { name: "Messages" }).click();
+  await page.waitForURL("**/messages");
+  await expect(bar.getByRole("button", { name: "Pause", exact: true })).toBeVisible();
+  const afterNavigation = await position();
+  await expect.poll(position).toBeGreaterThan(afterNavigation);
+
+  // Back on the profile, the card's button mirrors the bar.
+  await page.getByRole("link", { name: "My profile" }).click();
+  await page.waitForURL("**/profile");
+  await expect(page.getByRole("button", { name: "Pause Afterlight" })).toBeVisible();
+  await bar.getByRole("button", { name: "Pause", exact: true }).click();
+  await expect(bar.getByRole("button", { name: "Play", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Play Afterlight" })).toBeVisible();
+
+  // Seeking and volume answer to the keyboard.
+  const paused = await position();
+  await seek.focus();
+  await page.keyboard.press("ArrowRight");
+  expect(await position()).toBeGreaterThan(paused);
+  const volume = bar.getByRole("slider", { name: "Volume" });
+  await volume.focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(volume).toHaveAttribute("aria-valuetext", "99%");
+
+  await bar.getByRole("button", { name: "Close player" }).click();
+  await expect(bar).toBeHidden();
+  expect(await page.evaluate(() => parseFloat(getComputedStyle(document.body).paddingBottom))).toBe(0);
 });
 
 test("an .ogg file is refused before any draft is created", async ({ page }) => {

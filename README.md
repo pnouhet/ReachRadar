@@ -13,6 +13,7 @@ The original static home prototype is kept in `prototype/` for reference.
 - **Settings · Profile**: name, bio, location, genres, links, avatar and banner uploads.
 - **Settings · Account**: password change.
 - **Upload a track**: MP3 / FLAC / WAV up to 50 MB (resumable upload straight to Supabase Storage), artwork, details, tags, rights, publish checklist; published tracks appear on **My profile** and can be played.
+- **Audio player**: a bar at the bottom of the screen that keeps playing while you move between pages (play / pause, previous, next, seek, volume, mute, close). It lives in the root layout (`src/components/player/`, store in `src/lib/player/store.ts`).
 
 Docs: design spec in `docs/superpowers/specs/`, implementation plans in `docs/superpowers/plans/`.
 

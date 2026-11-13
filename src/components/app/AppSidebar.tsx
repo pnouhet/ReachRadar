@@ -1,5 +1,6 @@
 import { LogOut } from "lucide-react";
 import { signOut } from "@/lib/auth/actions";
+import { closePlayer } from "@/lib/player/store";
 import { cn } from "@/lib/cn";
 import { matchesPath, navFor, type Role } from "@/lib/nav";
 import { artistMock, curatorMock } from "@/mocks";
@@ -44,7 +45,7 @@ export function AppSidebar({ role, pathname, onNavigate, className }: AppSidebar
 
       <div className="flex flex-col gap-4">
         {role === "artist" ? <FreeCreditsPromo /> : <StayVerifiedPromo />}
-        <form action={signOut}>
+        <form action={signOut} onSubmit={closePlayer}>
           <button
             type="submit"
             className="flex h-12 w-full items-center gap-3.5 pr-3 pl-4 text-body-md text-soft-white hover:text-white"

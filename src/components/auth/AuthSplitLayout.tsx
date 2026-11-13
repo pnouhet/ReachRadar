@@ -37,7 +37,7 @@ export function AuthSplitLayout({ panel, back, switchTo, children }: AuthSplitLa
             <Wordmark width={240} className="h-3 w-auto" />
           </Link>
           <div className="flex w-full flex-wrap items-center justify-between gap-4">
-            <Link href={back.href} className="flex items-center gap-2.5 text-body-md text-soft-white hover:text-white">
+            <Link href={back.href} className="flex items-center gap-2.5 text-body-md text-soft-white hover:text-rose">
               <ArrowLeft size={20} strokeWidth={1.5} aria-hidden />
               {back.label}
             </Link>

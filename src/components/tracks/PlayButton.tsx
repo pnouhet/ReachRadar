@@ -1,37 +1,32 @@
 "use client";
 
 import { Loader2, Pause, Play } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { usePlayer, usePlayerState, useTrackQueue } from "@/components/player/PlayerProvider";
 import { cn } from "@/lib/cn";
-import { getTrackAudioUrl } from "@/lib/tracks/actions";
 
-let current: HTMLAudioElement | null = null;
+type PlayButtonProps = {
+  trackId: string;
+  title: string;
+  artist?: string | null;
+  coverUrl?: string | null;
+  size?: number;
+  className?: string;
+};
 
-/** Rose slanted 56px play square (Track Card). Fetches a signed URL for the private audio on first play. */
-export function PlayButton({ trackId, title, size = 56, className }: { trackId: string; title: string; size?: number; className?: string }) {
-  const audio = useRef<HTMLAudioElement | null>(null);
-  const [state, setState] = useState<"idle" | "loading" | "playing" | "error">("idle");
+/**
+ * Rose slanted 56px play square (Track Card). Hands the track to the site-wide player, which keeps
+ * playing across pages; inside a <TrackQueue> the whole list is queued for Previous / Next.
+ */
+export function PlayButton({ trackId, title, artist = null, coverUrl = null, size = 56, className }: PlayButtonProps) {
+  const player = usePlayer();
+  const { queue, index, status } = usePlayerState();
+  const list = useTrackQueue();
+  const isCurrent = index >= 0 && queue[index]?.id === trackId;
+  const state = isCurrent ? status : "idle";
 
-  useEffect(() => () => audio.current?.pause(), []);
-
-  async function toggle() {
-    if (state === "playing") {
-      audio.current?.pause();
-      return;
-    }
-    if (!audio.current) {
-      setState("loading");
-      const url = await getTrackAudioUrl(trackId);
-      if (!url) return setState("error");
-      const el = new Audio(url);
-      el.addEventListener("pause", () => setState("idle"));
-      el.addEventListener("ended", () => setState("idle"));
-      el.addEventListener("playing", () => setState("playing"));
-      audio.current = el;
-    }
-    if (current && current !== audio.current) current.pause();
-    current = audio.current;
-    await audio.current.play().catch(() => setState("error"));
+  function toggle() {
+    if (isCurrent) return player.toggle();
+    player.play({ id: trackId, title, artist, coverUrl }, list ?? undefined);
   }
 
   const Icon = state === "loading" ? Loader2 : state === "playing" ? Pause : Play;

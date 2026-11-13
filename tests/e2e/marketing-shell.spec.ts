@@ -86,6 +86,39 @@ test("the menu fills the viewport even after the header has blurred on scroll", 
   expect(box!.height).toBeGreaterThan(innerHeight - 2);
 });
 
+test("the menu slides in from the left, covers 30% of a wide screen and closes on a backdrop click", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+  const dialog = page.getByRole("dialog", { name: "Menu" });
+  await expect(dialog).toHaveAttribute("data-shown", "true");
+  // Wait for the slide to settle at the left edge.
+  await expect
+    .poll(async () => Math.round((await dialog.boundingBox())!.x))
+    .toBe(0);
+  const box = (await dialog.boundingBox())!;
+  expect(Math.round(box.width)).toBe(432);
+  // Click the dimmed page to the right of the drawer.
+  await page.mouse.click(1000, 450);
+  await expect(dialog).toBeHidden();
+  await expect(page.getByRole("button", { name: "Open menu" })).toBeFocused();
+});
+
+test("the menu drawer stays readable on a phone", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+  const dialog = page.getByRole("dialog", { name: "Menu" });
+  await expect
+    .poll(async () => Math.round((await dialog.boundingBox())!.x))
+    .toBe(0);
+  expect(Math.round((await dialog.boundingBox())!.width)).toBe(320);
+  const overflows = await dialog.evaluate((d) => d.scrollWidth > d.clientWidth);
+  expect(overflows).toBe(false);
+});
+
 test("the open menu traps keyboard focus", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Open menu" }).click();

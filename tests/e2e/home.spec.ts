@@ -99,20 +99,36 @@ test("loads without page or console errors, also after a client navigation back"
   expect(errors).toEqual([]);
 });
 
-test("Scroll down jumps to the Get heard section", async ({ page }) => {
+test("Scroll down eases the page to the Get heard section", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "Scroll down" }).click();
   await expect(page).toHaveURL(/#get-heard$/);
-  await expect(page.locator("#get-heard")).toBeInViewport();
+  // Smooth, not a jump: shortly after the click the page is still on its way.
+  await page.waitForTimeout(250);
+  const midway = await page.evaluate(() => window.scrollY);
+  const target = await page.evaluate(() => {
+    const s = document.getElementById("get-heard")!;
+    return (
+      s.getBoundingClientRect().top +
+      window.scrollY -
+      parseFloat(getComputedStyle(s).scrollMarginTop)
+    );
+  });
+  expect(midway).toBeLessThan(target - 1);
+  // Lands on the section, honouring its scroll margin, and moves focus there.
+  await expect
+    .poll(() => page.evaluate(() => Math.round(window.scrollY)))
+    .toBe(Math.round(target));
+  await expect(page.locator("#get-heard")).toBeFocused();
 });
 
 test("the live tabs switch selection", async ({ page }) => {
   await page.goto("/");
   const teaser = page.getByRole("tab", { name: "Teaser trailer" });
-  const behind = page.getByRole("tab", { name: "Behind the scenes" });
+  const second = page.getByRole("tab", { name: "How it works" });
   await expect(teaser).toHaveAttribute("aria-selected", "true");
-  await behind.click();
-  await expect(behind).toHaveAttribute("aria-selected", "true");
+  await second.click();
+  await expect(second).toHaveAttribute("aria-selected", "true");
   await expect(teaser).toHaveAttribute("aria-selected", "false");
 });
 

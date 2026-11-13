@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -58,28 +57,22 @@ export function SiteHeader({ signedIn }: { signedIn: boolean }) {
               aria-label="Open menu"
               aria-haspopup="dialog"
               onClick={() => setMenuOpen(true)}
-              className="size-10 focus-visible:outline-2 focus-visible:outline-cyan"
+              className="group size-10 focus-visible:outline-2 focus-visible:outline-cyan hover:cursor-pointer"
             >
-              <Image
-                src="/home/menu.svg"
-                width={40}
-                height={40}
-                alt=""
-                unoptimized
-              />
+            <span
+              aria-hidden
+              className="block size-10 bg-white transition-colors duration-200 [mask:url(/home/menu.svg)_center/contain_no-repeat] group-hover:bg-cyan"
+            />
             </button>
             <Link
               href="/catalogue"
               aria-label="Search"
-              className="size-10 focus-visible:outline-2 focus-visible:outline-cyan max-[560px]:hidden"
+              className="group size-10 focus-visible:outline-2 focus-visible:outline-cyan max-[560px]:hidden"
             >
-              <Image
-                src="/home/search.svg"
-                width={40}
-                height={40}
-                alt=""
-                unoptimized
-              />
+            <span
+              aria-hidden
+              className="block size-10 bg-white transition-colors duration-200 [mask:url(/home/search.svg)_center/contain_no-repeat] group-hover:bg-cyan"
+            />
             </Link>
           </div>
           <Link

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Syne } from "next/font/google";
+import { PlayerBar } from "@/components/player/PlayerBar";
+import { PlayerProvider } from "@/components/player/PlayerProvider";
 import { OutlineFilter } from "@/components/ui/OutlineFilter";
 import "./globals.css";
 
@@ -21,7 +23,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" suppressHydrationWarning className={`${syne.variable} ${inter.variable}`}>
       <body>
         <OutlineFilter />
-        {children}
+        {/* The root layout never remounts, so the player keeps playing across pages. */}
+        <PlayerProvider>
+          {children}
+          <PlayerBar />
+        </PlayerProvider>
       </body>
     </html>
   );

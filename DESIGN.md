@@ -258,6 +258,7 @@ ReachRadar is a platform for independent artists: pitch songs to Spotify playlis
 - **Rating module:** five skewed segments that fill cyan on select, plus a required feedback textarea with a live character counter.
 - **Chat:** conversations list on the left (avatars with an online cyan dot) and the thread on the right. Others' messages sit on surface-2 bubbles and your own on cyan at 20% with a 1px cyan border. Bubbles have sharp corners. The composer has an attach-track button.
 - **Credit pack card (pricing):** surface-1 card with the credit amount in huge Syne 800, the price in Inter 600 and a list of included items. The "Most popular" pack gets a rose skewed ribbon and a cyan 1px border.
+- **Player bar (site-wide, not in Figma):** 72px surface-1 dock fixed to the bottom once a track is started; it keeps playing across pages. Left: 44px cover, title in Syne 700 uppercase 14px, artist in slate. Centre: previous, a 44px rose slanted play/pause square, next. Right: elapsed / total time, mute, a volume slider and a close button. A 3px rose seek line runs along the top edge. Sliders use a 3px track with a white 12px square thumb (2px radius) shown on hover, focus and touch. On phones the time and volume are hidden. The bar publishes its height as `--player-h` so pages pad themselves.
 
 ## Figma implementation (source of truth)
 

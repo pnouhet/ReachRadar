@@ -10,7 +10,9 @@ export function Intro() {
     <section
       id={intro.id}
       aria-labelledby="intro-title"
-      className="relative flex min-h-[700px] scroll-mt-20 items-center bg-linear-to-b from-midnight/0 from-0% to-midnight to-[40.1%] py-[106px] max-[860px]:py-16"
+      // Focus target for the hero "Scroll down" link (keyboard users continue from here).
+      tabIndex={-1}
+      className="relative flex min-h-[700px] scroll-mt-20 items-center outline-none bg-linear-to-b from-midnight/0 from-0% to-midnight to-[40.1%] py-[106px] max-[860px]:py-16"
     >
       <div className={`${CONTAINER} flex flex-col items-center gap-12`}>
         <span data-anim="badge" className="inline-flex">
