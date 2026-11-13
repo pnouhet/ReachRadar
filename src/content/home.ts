@@ -50,7 +50,7 @@ export const HOME = {
       height: 1000,
       alt: "A crowd raising hands in front of a stage lit in blue",
     } satisfies HomeImage,
-    tabs: ["Teaser trailer", "Behind the scenes"],
+    tabs: ["Teaser trailer", "How it works"],
   },
 
   promisesHead: {

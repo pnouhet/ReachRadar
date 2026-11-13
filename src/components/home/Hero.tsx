@@ -4,6 +4,7 @@ import { SocialIcons } from "@/components/site/SocialIcons";
 import { Button } from "@/components/ui/Button";
 import { HOME } from "@/content/home";
 import { Lines } from "./parts";
+import { ScrollDownLink } from "./ScrollDownLink";
 
 const { hero } = HOME;
 
@@ -84,9 +85,9 @@ export function Hero({ children }: { children: ReactNode }) {
           data-anim="hero-bar"
           className="absolute bottom-[102px] left-1/2 flex h-[100px] w-[min(1320px,100%_-_2*var(--gutter))] -translate-x-1/2 items-center justify-between max-[860px]:bottom-10"
         >
-          <a
-            href="#get-heard"
-            aria-label={hero.scroll.label}
+          <ScrollDownLink
+            target={HOME.intro.id}
+            label={hero.scroll.label}
             className="flex items-center gap-5 text-[16px] leading-[30px]"
           >
             <Image
@@ -98,7 +99,7 @@ export function Hero({ children }: { children: ReactNode }) {
               className="animate-nudge motion-reduce:animate-none"
             />
             <span className="max-[560px]:hidden">{hero.scroll.label}</span>
-          </a>
+          </ScrollDownLink>
           <SocialIcons spacing="hero" />
         </div>
       </section>
