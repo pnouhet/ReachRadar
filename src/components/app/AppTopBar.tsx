@@ -6,6 +6,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { CreditPill } from "@/components/ui/CreditPill";
 import { Wordmark } from "@/components/ui/Wordmark";
 import { signOut } from "@/lib/auth/actions";
+import { closePlayer } from "@/lib/player/store";
 import type { Role } from "@/lib/nav";
 import { artistMock, curatorMock } from "@/mocks";
 
@@ -88,7 +89,7 @@ export function AppTopBar({ user, menuOpen, onToggleMenu }: AppTopBarProps) {
           <Link href="/settings/profile" className="px-4 py-2.5 text-body-md text-soft-white hover:bg-surface-2 hover:text-white">
             Settings
           </Link>
-          <form action={signOut}>
+          <form action={signOut} onSubmit={closePlayer}>
             <button type="submit" className="w-full px-4 py-2.5 text-left text-body-md text-soft-white hover:bg-surface-2 hover:text-white">
               Log out
             </button>

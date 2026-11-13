@@ -1,13 +1,16 @@
 "use client";
 
 import { Check, FileAudio, Music, Pause, Play, Upload, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormMessage } from "@/components/auth/FormMessage";
 import { Waveform } from "@/components/tracks/Waveform";
 import { AUDIO_ACCEPT, AUDIO_HELP } from "@/lib/audio/validate";
 import { cn } from "@/lib/cn";
 import { formatBytes, formatDuration } from "@/lib/format";
+import { announceAudioStart, onOtherAudioStart } from "@/lib/player/store";
 import { Panel } from "./Panel";
+
+const PREVIEW_SOURCE = "upload-preview";
 
 export type AudioState = {
   name: string;
@@ -38,6 +41,9 @@ export function AudioPanel({ audio, error, onPick, onCancel, loadSrc }: AudioPan
   const [time, setTime] = useState(0);
   const [dragging, setDragging] = useState(false);
   const uploading = audio !== null && !audio.uploaded;
+
+  // One sound at a time: this preview pauses when the site player (or anything else) starts.
+  useEffect(() => onOtherAudioStart(PREVIEW_SOURCE, () => player.current?.pause()), []);
 
   function pickFile(file: File) {
     const el = player.current;
@@ -137,7 +143,10 @@ export function AudioPanel({ audio, error, onPick, onCancel, loadSrc }: AudioPan
             ref={player}
             preload="none"
             data-testid="audio-player"
-            onPlay={() => setPlaying(true)}
+            onPlay={() => {
+              announceAudioStart(PREVIEW_SOURCE);
+              setPlaying(true);
+            }}
             onPause={() => setPlaying(false)}
             onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
           />

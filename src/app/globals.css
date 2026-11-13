@@ -151,7 +151,8 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-padding-bottom: var(--consent-h, 0px);
+    /* --consent-h: cookie banner, --player-h: audio player bar (both fixed to the bottom). */
+    scroll-padding-bottom: calc(var(--consent-h, 0px) + var(--player-h, 0px));
   }
   body {
     background: var(--color-midnight);
@@ -161,7 +162,7 @@
     line-height: 24px;
     -webkit-font-smoothing: antialiased;
     min-height: 100dvh;
-    padding-bottom: var(--consent-h, 0px);
+    padding-bottom: calc(var(--consent-h, 0px) + var(--player-h, 0px));
   }
   :focus-visible {
     outline: 2px solid var(--color-cyan);
@@ -200,6 +201,87 @@
     transition:
       background-color 0.2s,
       border-color 0.2s;
+  }
+}
+
+/* ---------- Range slider (audio player seek and volume) ----------
+   A 3px track with a square thumb that shows on hover, focus and touch screens.
+   Set --range-pct (filled share) and optionally --range-fill on the element. */
+@layer components {
+  .rr-range {
+    --range-pct: 0%;
+    --range-fill: var(--color-soft-white);
+    --range-rest: var(--color-surface-3);
+    appearance: none;
+    height: 20px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .rr-range:disabled {
+    cursor: default;
+  }
+  .rr-range::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--range-fill) var(--range-pct), var(--range-rest) var(--range-pct));
+  }
+  .rr-range::-moz-range-track {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--range-rest);
+  }
+  .rr-range::-moz-range-progress {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--range-fill);
+  }
+  .rr-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    margin-top: -4.5px;
+    border: 0;
+    border-radius: 2px;
+    background: #ffffff;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .rr-range::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: 0;
+    border-radius: 2px;
+    background: #ffffff;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .rr-range:hover:not(:disabled)::-webkit-slider-thumb,
+  .rr-range:focus-visible::-webkit-slider-thumb {
+    opacity: 1;
+  }
+  .rr-range:hover:not(:disabled)::-moz-range-thumb,
+  .rr-range:focus-visible::-moz-range-thumb {
+    opacity: 1;
+  }
+  @media (hover: none) {
+    .rr-range:not(:disabled)::-webkit-slider-thumb {
+      opacity: 1;
+    }
+    .rr-range:not(:disabled)::-moz-range-thumb {
+      opacity: 1;
+    }
+  }
+  /* The seek line sits on the player's top edge, full width: square ends. */
+  .rr-range-seek::-webkit-slider-runnable-track {
+    border-radius: 0;
+  }
+  .rr-range-seek::-moz-range-track,
+  .rr-range-seek::-moz-range-progress {
+    border-radius: 0;
+  }
+  .rr-range-seek:focus-visible {
+    outline-offset: -2px;
   }
 }
 
